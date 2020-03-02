@@ -27,7 +27,7 @@ public class QuestsController : MonoBehaviour
         VCams[0].SetActive(false);
         VCams[1].SetActive(false);
         VCams[2].SetActive(true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         VCams[2].SetActive(false);
         VCams[0].SetActive(true);
         Border[1].SetActive(false);
