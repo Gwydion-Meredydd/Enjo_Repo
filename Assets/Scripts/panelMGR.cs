@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class panelMGR : MonoBehaviour
 {
-    public float clicking;
+    public int clicking;
 
     [Header("Boards")]
     public GameObject boardOne;
@@ -20,7 +20,7 @@ public class panelMGR : MonoBehaviour
     public GameObject boardTen;
     public GameObject boardEleven;
     public GameObject boardTwelve;
-    public Animator fadeAnim;
+    public Animator[] fadeAnim;
 
     void Start()
     {
@@ -33,7 +33,7 @@ public class panelMGR : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             ClickMethod();
-            fadeAnim.SetBool("Fade", true);
+            fadeAnim[clicking].SetBool("Fade", true);
 
         }
     }
