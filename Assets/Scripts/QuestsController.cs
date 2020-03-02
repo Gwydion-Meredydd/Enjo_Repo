@@ -6,45 +6,40 @@ using UnityEngine.UI;
 
 public class QuestsController : MonoBehaviour
 {
-    public int PickUpAmmount;
-    public int HasPickedUpAmmount;
+    public GameObject Player;
+    public Animator QuestText;
+    public GameObject[] Border;
+    public GameObject[] VCams;
+    public int GrabAmmount;
+    public void QuestCompleted()
+    {
+        Player.SendMessage("QuestCompleted");
+        StartCoroutine(QuestTextTiming());
 
-    public int QuestNumber;
-    public QuestList QuestList = new QuestList();
-    public int pickedupammount;
+    }
+    IEnumerator QuestTextTiming()
+    {
+        QuestText.SetBool("Complete", true);
+        yield return new WaitForSeconds(2.2f);
+        QuestText.SetBool("Complete", false);
+        Border[0].SetActive(false);
+        Border[1].SetActive(true);
+        VCams[0].SetActive(false);
+        VCams[1].SetActive(false);
+        VCams[2].SetActive(true);
+        yield return new WaitForSeconds(1);
+        VCams[2].SetActive(false);
+        VCams[0].SetActive(true);
+        Border[1].SetActive(false);
+    }
 
-    public void Start()
+
+    public void Grab()
     {
-        NewQuest();
-    }
-    public void NewQuest()
-    {
-        QuestNumber++;
-    }
-    public void pickup()
-    {
-        if (pickedupammount < 3)
+        GrabAmmount++;
+        if (GrabAmmount == 3)
         {
-            pickedupammount++;
-        }
-        if (pickedupammount == 3) 
-        {
-            pickedupammount = 0;
-            NewQuest();
+            QuestCompleted();
         }
     }
-
 }
-[System.Serializable]
-public class Quests
-{
-    public string Name;
-    public List<GameObject> QuestItems;
-}
-
-[System.Serializable]
-public class QuestList
-{
-    public List<Quests> Quests;
-}
-

@@ -17,6 +17,7 @@ public class Charactermanager : MonoBehaviour
 
     private Vector3 DisiredMoveDirection;
 
+    [SerializeField] GameObject QuestManger;
     [SerializeField] Animator CharacterAnimator;
     [Range(0.001f, 1f)]
     [SerializeField] float RotationSpeed = 0.3f;
@@ -25,6 +26,7 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float SprintSpeed = 3f;
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
+    [SerializeField] bool MoveOveride;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,8 +45,11 @@ public class Charactermanager : MonoBehaviour
         InputZ = Input.GetAxis("Vertical");
         InputSprint = Input.GetAxis("Fire3");
 
-        InputDecider();
-        MovementManger();
+        if (MoveOveride == false)
+        {
+            InputDecider();
+            MovementManger();
+        }
     }
     void InputDecider()
     {
@@ -146,6 +151,7 @@ public class Charactermanager : MonoBehaviour
         {
             PickupText.text = "You Collected a coin!";
             CharacterAnimator.SetBool("Grab", true);
+            QuestManger.SendMessage("Grab");
             StartCoroutine(TextPickupTimer());
         }
     }
@@ -153,7 +159,23 @@ public class Charactermanager : MonoBehaviour
     {
         PickupText.text = "";
     }
+    public void CanMove()
+    {
+        MoveOveride = false;
+    }
+    public void QuestCompleted()
+    {
+        MoveOveride = true;
+        CharacterAnimator.SetBool("Celebrate", true);
+        StartCoroutine(CelebrationTiming());
 
+    }
+    IEnumerator CelebrationTiming()
+    {
+        yield return new WaitForSeconds(1.5f);
+        CharacterAnimator.SetBool("Celebrate",false);
+        MoveOveride = false;
+    }
     void JumpOff() 
     {
         if (gravity < 0)
