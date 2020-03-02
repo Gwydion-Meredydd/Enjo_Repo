@@ -21,20 +21,22 @@ public class QuestsController : MonoBehaviour
     {
         QuestText.SetBool("Complete", true);
         yield return new WaitForSeconds(2.2f);
-        QuestText.SetBool("Complete",false);
+        QuestText.SetBool("Complete", false);
         Border[0].SetActive(false);
         Border[1].SetActive(true);
         VCams[0].SetActive(false);
-        VCams[1].SetActive(true);
-        yield return new WaitForSeconds(1);
         VCams[1].SetActive(false);
+        VCams[2].SetActive(true);
+        yield return new WaitForSeconds(1);
+        VCams[2].SetActive(false);
+        VCams[0].SetActive(true);
         Border[1].SetActive(false);
     }
 
 
     public void Grab()
     {
-        GrabAmmount ++;
+        GrabAmmount++;
         if (GrabAmmount == 3)
         {
             QuestCompleted();
