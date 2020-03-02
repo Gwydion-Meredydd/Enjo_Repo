@@ -6,45 +6,21 @@ using UnityEngine.UI;
 
 public class QuestsController : MonoBehaviour
 {
-    public int PickUpAmmount;
-    public int HasPickedUpAmmount;
-
-    public int QuestNumber;
-    public QuestList QuestList = new QuestList();
-    public int pickedupammount;
-
-    public void Start()
+    public GameObject Player;
+    public Animation QuestText;
+    public int GrabAmmount;
+    public void QuestCompleted()
     {
-        NewQuest();
+        Player.SendMessage("QuestCompleted");
+        QuestText.Play;
     }
-    public void NewQuest()
+
+    public void Grab()
     {
-        QuestNumber++;
-    }
-    public void pickup()
-    {
-        if (pickedupammount < 3)
+        GrabAmmount ++;
+        if (GrabAmmount == 3)
         {
-            pickedupammount++;
-        }
-        if (pickedupammount == 3) 
-        {
-            pickedupammount = 0;
-            NewQuest();
+            QuestCompleted();
         }
     }
-
 }
-[System.Serializable]
-public class Quests
-{
-    public string Name;
-    public List<GameObject> QuestItems;
-}
-
-[System.Serializable]
-public class QuestList
-{
-    public List<Quests> Quests;
-}
-
