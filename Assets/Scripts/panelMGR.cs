@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class panelMGR : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class panelMGR : MonoBehaviour
     public GameObject boardTen;
     public GameObject boardEleven;
     public GameObject boardTwelve;
+    public GameObject TitleScreen;
     public Animator[] fadeAnim;
 
     void Start()
@@ -153,5 +155,15 @@ public class panelMGR : MonoBehaviour
 
             Debug.Log(clicking);
         }
+        else if (clicking == 13)
+        {
+            TitleScreen.SetActive(true);
+            StartCoroutine(TitleTiming());
+        }
+    }
+    IEnumerator TitleTiming()
+    {
+        yield return new WaitForSeconds(14.5f);
+        SceneManager.LoadScene(3);
     }
 }
