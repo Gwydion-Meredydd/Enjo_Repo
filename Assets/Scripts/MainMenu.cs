@@ -8,7 +8,8 @@ public class MainMenu : MonoBehaviour
 {
     public Animator CameraAnimator;
     public AudioMixer Mixer;
-    
+    public GameObject ToggleGameObject;
+
     public void Start()
     {
         Screen.SetResolution(1920, 1080, true);
@@ -17,23 +18,23 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
-    public void Instructions() 
+    public void Instructions()
     {
         CameraAnimator.SetBool("Instructions", true);
     }
-    public void Settings() 
+    public void Settings()
     {
         CameraAnimator.SetBool("Settings", true);
     }
-    public void Credits() 
+    public void Credits()
     {
         SceneManager.LoadScene(1);
     }
-    public void Exit() 
+    public void Exit()
     {
         CameraAnimator.SetBool("Exit", true);
     }
-    public void ExitYes() 
+    public void ExitYes()
     {
         Application.Quit();
     }
@@ -41,7 +42,7 @@ public class MainMenu : MonoBehaviour
     {
         CameraAnimator.SetBool("Exit", false);
     }
-    public void Return() 
+    public void Return()
     {
         CameraAnimator.SetBool("Instructions", false);
         CameraAnimator.SetBool("Settings", false);
@@ -51,7 +52,7 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-    public void MasterSliderValue(float sliderValue) 
+    public void MasterSliderValue(float sliderValue)
     {
         Mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);
     }
@@ -75,5 +76,44 @@ public class MainMenu : MonoBehaviour
     {
         Mixer.SetFloat("World", Mathf.Log10(sliderValue) * 20);
     }
+    public void DropDown(int value)
+    {
+        if (value == 0)
+        {
+            QualitySettings.SetQualityLevel(1);
+        }
+        if (value == 1)
+        {
+            QualitySettings.SetQualityLevel(2);
+        }
+        if (value == 2)
+        {
+            QualitySettings.SetQualityLevel(3);
+        }
+        if (value == 3)
+        {
+            QualitySettings.SetQualityLevel(4);
+        }
+        if (value == 4)
+        {
+            QualitySettings.SetQualityLevel(5);
+        }
+        if (value == 5)
+        {
+            QualitySettings.SetQualityLevel(6);
+        }
 
+    }
+    public void ScreenChange()
+    {
+        bool ToggleSwitch = ToggleGameObject.GetComponent<Toggle>().isOn;
+        if (ToggleSwitch)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+    }
 }
