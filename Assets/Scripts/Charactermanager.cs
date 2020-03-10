@@ -8,6 +8,7 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class Charactermanager : MonoBehaviour
 {
+    public GameObject Player;
     private float InputX, InputZ, InputSprint, Speed, OriginalSpeed;
     public CinemachineVirtualCamera ThirdPersonCamera;
     private Camera Cam;
@@ -27,7 +28,8 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
     [SerializeField] bool MoveOveride;
-    public  Transform[] ShopLocations;
+    public  GameObject ShopLocationsEnter;
+    public GameObject ShopLocationsExit;
     public Animator TransitionController;
     // Start is called before the first frame update
     void Start()
@@ -167,22 +169,11 @@ public class Charactermanager : MonoBehaviour
     }
     public void ApothecaryShopEntrance()
     {
-        if (ShopTeleporting == false)
-        {
-            ShopTeleporting = true;
-            gameObject.transform.position = ShopLocations[0].position;
-            StartCoroutine(ShopEntrance());
-            
-        }
+        StartCoroutine(ShopEntrance());
     }
     public void ApothecaryShopExit()
     {
-        if (ShopTeleporting == false)
-        {
-            ShopTeleporting = true;
-            gameObject.transform.position = ShopLocations[1].position;
-            StartCoroutine(ShopExit());
-        }
+        StartCoroutine(ShopExit());
     }
 
     public void QuestCompleted()
@@ -204,7 +195,8 @@ public class Charactermanager : MonoBehaviour
     IEnumerator ShopEntrance()
     {
         Debug.Log("Entrance");
-        gameObject.transform.position = ShopLocations[0].position;
+        Player.gameObject.transform.position = new Vector3 (625, -44, 305);
+        Debug.Log("Entrance2");
         TransitionController.SetBool("CircleTransition", true);
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
