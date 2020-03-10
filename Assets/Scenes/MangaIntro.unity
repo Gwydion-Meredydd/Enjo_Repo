@@ -208,7 +208,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: One legendary warrior from Tempris  managed to defeat Shiro, banishing him
-    into hiding. The warriors sword was lost  and has never been found...
+    into hiding. The warrior's sword was lost  and has never been found...
 --- !u!222 &23748334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -271,8 +271,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 49.7, y: 100.2}
-  m_SizeDelta: {x: 2009.7, y: 128.5}
+  m_AnchoredPosition: {x: 94.5, y: 87.7}
+  m_SizeDelta: {x: 1500, y: 132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &28704268
 Animator:
@@ -484,8 +484,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Creating an army of minions consumed with darkness, he waged war on the
-    klans, promising to destroy all that caused him pain. '
+  m_Text: 'Creating an army of undead minions called the Shayde klan, Shiro waged
+    war on the other klans, promising to destroy all that caused him pain. '
 --- !u!222 &151345416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -549,7 +549,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.7, y: 13.7}
-  m_SizeDelta: {x: 756.1, y: 281.1}
+  m_SizeDelta: {x: 756, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &238656254
 Animator:
@@ -643,8 +643,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 49.7, y: -61.9}
-  m_SizeDelta: {x: 2009.7, y: 128.5}
+  m_AnchoredPosition: {x: 94.499985, y: -60.300003}
+  m_SizeDelta: {x: 1500, y: 132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &256239466
 Animator:
@@ -1049,8 +1049,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 258.7, y: 13.7}
-  m_SizeDelta: {x: 223.9, y: 281.1}
+  m_AnchoredPosition: {x: 265.29996, y: 13.7}
+  m_SizeDelta: {x: 224, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &575718492
 Animator:
@@ -1631,7 +1631,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.7, y: 13.7}
-  m_SizeDelta: {x: 756.1, y: 281.1}
+  m_SizeDelta: {x: 756, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &878988460
 Animator:
@@ -1726,7 +1726,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.7, y: 13.7}
-  m_SizeDelta: {x: 756.1, y: 281.1}
+  m_SizeDelta: {x: 756, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1106025335
 Animator:
@@ -1798,7 +1798,7 @@ GameObject:
   - component: {fileID: 1274171542}
   - component: {fileID: 1274171541}
   m_Layer: 5
-  m_Name: BackGround
+  m_Name: Background Fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2045,7 +2045,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hydris could control water, but always maintained elegancy in everything
+  m_Text: Hydris could control water, but always maintained elegance in everything
     they did...
 --- !u!222 &1325899245
 CanvasRenderer:
@@ -2161,7 +2161,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Eventually the klans grew tired and weary, blocking themselves in from
+  m_Text: 'Eventually the klans grew tired and weary, barricading themselves in from
     the outside world. '
 --- !u!222 &1326796761
 CanvasRenderer:
@@ -2277,8 +2277,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The onslaught that endured from Shiro was brutal and many brave warriors
-    were lost to his darkness...
+  m_Text: The onslaught that was endured from the Shayde klan was brutal and many
+    brave warriors were lost to Shiro's darkness...
 --- !u!222 &1336386258
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2422,7 +2422,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.7, y: 13.7}
-  m_SizeDelta: {x: 756.1, y: 281.1}
+  m_SizeDelta: {x: 756, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1523020238
 MonoBehaviour:
@@ -2516,8 +2516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -258.7, y: 13.7}
-  m_SizeDelta: {x: 223.9, y: 281.1}
+  m_AnchoredPosition: {x: -266.7, y: 13.7}
+  m_SizeDelta: {x: 224, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1575018873
 MonoBehaviour:
@@ -2611,8 +2611,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -49.7, y: 86.9}
-  m_SizeDelta: {x: 2009.7, y: 128.5}
+  m_AnchoredPosition: {x: -104.5, y: 87.7}
+  m_SizeDelta: {x: 1500, y: 132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1605570057
 Animator:
@@ -3103,7 +3103,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.7, y: 13.7}
-  m_SizeDelta: {x: 756.1, y: 281.1}
+  m_SizeDelta: {x: 756, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900207515
 MonoBehaviour:
@@ -3197,8 +3197,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -49.7, y: -51.5}
-  m_SizeDelta: {x: 2009.7, y: 128.5}
+  m_AnchoredPosition: {x: -104.49999, y: -60.3}
+  m_SizeDelta: {x: 1500, y: 132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1911045698
 Animator:
@@ -3291,8 +3291,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.7, y: 0.1}
-  m_SizeDelta: {x: 807.6, y: 366.7}
+  m_AnchoredPosition: {x: -0.7, y: -4.15}
+  m_SizeDelta: {x: 807.6, y: 399.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2027988292
 MonoBehaviour:
@@ -3367,8 +3367,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 13.7}
-  m_SizeDelta: {x: 223.9, y: 281.1}
+  m_AnchoredPosition: {x: 0.10001, y: 13.7}
+  m_SizeDelta: {x: 224, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2108763731
 Animator:
@@ -3514,7 +3514,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Full of hatrid for the world, Shiro traded his soul to become the most
+  m_Text: 'Full of hatred for the world, Shiro traded his soul to become the most
     powerful being in existence, and a state of immortality. '
 --- !u!222 &2127675839
 CanvasRenderer:
