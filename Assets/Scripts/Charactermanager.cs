@@ -8,11 +8,12 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class Charactermanager : MonoBehaviour
 {
+    public GameObject Player;
     private float InputX, InputZ, InputSprint, Speed, OriginalSpeed;
     public CinemachineVirtualCamera ThirdPersonCamera;
     private Camera Cam;
     private CharacterController character_Controller;
-    private bool CanJump;
+    private bool CanJump,ShopTeleporting = false;
     public Text PickupText;
 
     private Vector3 DisiredMoveDirection;
@@ -27,6 +28,9 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
     [SerializeField] bool MoveOveride;
+    public  GameObject ShopLocationsEnter;
+    public GameObject ShopLocationsExit;
+    public Animator TransitionController;
     // Start is called before the first frame update
     void Start()
     {
@@ -163,12 +167,41 @@ public class Charactermanager : MonoBehaviour
     {
         MoveOveride = false;
     }
+    public void ApothecaryShopEntrance()
+    {
+        StartCoroutine(ShopEntrance());
+    }
+    public void ApothecaryShopExit()
+    {
+        StartCoroutine(ShopExit());
+    }
+
     public void QuestCompleted()
     {
         MoveOveride = true;
         CharacterAnimator.SetBool("Celebrate", true);
         StartCoroutine(CelebrationTiming());
 
+    }
+    IEnumerator ShopExit()
+    {
+        Debug.Log("Exit");
+        TransitionController.SetBool("CircleTransition", true);
+        yield return new WaitForSeconds(1f);
+        TransitionController.SetBool("CircleTransition", false);
+        yield return new WaitForSeconds(1.5f);
+        ShopTeleporting = false;
+    }
+    IEnumerator ShopEntrance()
+    {
+        Debug.Log("Entrance");
+        Player.gameObject.transform.position = new Vector3 (625, -44, 305);
+        Debug.Log("Entrance2");
+        TransitionController.SetBool("CircleTransition", true);
+        yield return new WaitForSeconds(1f);
+        TransitionController.SetBool("CircleTransition", false);
+        yield return new WaitForSeconds(1.5f);
+        ShopTeleporting = false;
     }
     IEnumerator CelebrationTiming()
     {
