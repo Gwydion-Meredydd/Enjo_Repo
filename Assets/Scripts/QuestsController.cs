@@ -13,6 +13,8 @@ public class QuestsController : MonoBehaviour
     public GameObject[] Border;
     public GameObject[] VCams;
     public int GrabAmmount;
+    public int CoinAmmount;
+    public Text CoinAmmountText;
     public void QuestCompleted()
     {
         QuestNumber++;
@@ -44,6 +46,8 @@ public class QuestsController : MonoBehaviour
     public void Grab()
     {
         GrabAmmount++;
+        CoinAmmount = CoinAmmount + 25;
+        CoinAmmountText.text = "$ "+ CoinAmmount.ToString();
         if (GrabAmmount == 3)
         {
             QuestCompleted();

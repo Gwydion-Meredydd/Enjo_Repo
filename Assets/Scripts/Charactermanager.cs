@@ -13,7 +13,7 @@ public class Charactermanager : MonoBehaviour
     public CinemachineVirtualCamera ThirdPersonCamera;
     private Camera Cam;
     private CharacterController character_Controller;
-    private bool CanJump,ShopTeleporting = false;
+    private bool CanJump,ShopTeleporting = false, isPickingUp = false;
     public Text PickupText;
 
     private Vector3 DisiredMoveDirection;
@@ -151,8 +151,10 @@ public class Charactermanager : MonoBehaviour
     public void CanGrab()
     {
         PickupText.text = "Press 'E' to pickup item!";
-        if (Input.GetButtonDown("Interact"))
+        if (Input.GetButtonDown("Interact")&& isPickingUp == false)
         {
+            MoveOveride = true;
+            isPickingUp = true;
             PickupText.text = "You Collected a coin!";
             CharacterAnimator.SetBool("Grab", true);
             QuestManger.SendMessage("Grab");
@@ -169,7 +171,15 @@ public class Charactermanager : MonoBehaviour
     }
     public void ApothecaryShopEntrance()
     {
-        StartCoroutine(ShopEntrance());
+        if (ShopTeleporting == false)
+        {
+            Debug.Log("Entrance");
+            ShopTeleporting = true;
+            TransitionController.SetBool("CircleTransition", true);
+            TransitionController.SetBool("CircleTransition", false);
+            ShopTeleporting = false;
+           // StartCoroutine(ShopEntrance());
+        }
     }
     public void ApothecaryShopExit()
     {
@@ -189,20 +199,17 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", true);
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
-        yield return new WaitForSeconds(1.5f);
         ShopTeleporting = false;
     }
-    IEnumerator ShopEntrance()
-    {
-        Debug.Log("Entrance");
-        Player.gameObject.transform.position = new Vector3 (625, -44, 305);
-        Debug.Log("Entrance2");
-        TransitionController.SetBool("CircleTransition", true);
-        yield return new WaitForSeconds(1f);
-        TransitionController.SetBool("CircleTransition", false);
-        yield return new WaitForSeconds(1.5f);
-        ShopTeleporting = false;
-    }
+    //IEnumerator ShopEntrance()
+    //{
+        //Debug.Log("Entrance");
+        //Player.gameObject.transform.position = new Vector3 (625, -44, 305);
+        //Debug.Log("Entrance2");
+        //TransitionController.SetBool("CircleTransition", true);
+        //TransitionController.SetBool("CircleTransition", false);
+        //ShopTeleporting = false;
+    //}
     IEnumerator CelebrationTiming()
     {
         yield return new WaitForSeconds(1.5f);
@@ -220,7 +227,9 @@ public class Charactermanager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         CharacterAnimator.SetBool("Grab", false);
+        MoveOveride = false;
         yield return new WaitForSeconds(1);
         PickupText.text = "";
+        isPickingUp = false;
     }
 }
