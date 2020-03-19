@@ -14,6 +14,13 @@ public class PickUpDetection : MonoBehaviour
     public bool SendExitMessage;
     public GameObject Player;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        Player = GameObject.FindWithTag("Player");
+
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (SendStayMessage == true && Door == false)
@@ -32,8 +39,6 @@ public class PickUpDetection : MonoBehaviour
             TeleportCheck = true;
             if (other.gameObject.tag == "Player")
             {
-                Debug.Log("!");
-                Debug.Log(other);
                 Teleport();
             }
         }
@@ -63,9 +68,14 @@ public class PickUpDetection : MonoBehaviour
     }
     void Teleport() 
     {
-        Debug.Log("Teleportmethod");
-        Player.transform.position = TeleportLocation.transform.position;
-        Player.transform.position = new Vector3(663f, 4, 289);
+
+        Player.GetComponent<CharacterController>().enabled = false;
+        Player.transform.position = new Vector3(663f, -44.87f, 289);
+        Player.GetComponent<CharacterController>().enabled = true;
         Player.SendMessage(EnterMessageToSend);
     }
+
+    
+
+    
 }

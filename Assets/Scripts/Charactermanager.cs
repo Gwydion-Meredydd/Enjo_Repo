@@ -57,6 +57,7 @@ public class Charactermanager : MonoBehaviour
     }
     void InputDecider()
     {
+        
         Speed = new Vector2(InputX, InputZ).sqrMagnitude;
         if (InputSprint == 1) 
         {
@@ -98,7 +99,9 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetFloat("X_Input", Speed);
         Vector3 moveDirection = DisiredMoveDirection * (movementSpeed * Time.deltaTime);
         moveDirection = new Vector3(moveDirection.x, gravity, moveDirection.z);
+
         character_Controller.Move(moveDirection);
+
         if (character_Controller.isGrounded) 
         {
             //gravity = 0;
@@ -173,12 +176,15 @@ public class Charactermanager : MonoBehaviour
     {
         if (ShopTeleporting == false)
         {
-            Debug.Log("Entrance");
             ShopTeleporting = true;
+
             TransitionController.SetBool("CircleTransition", true);
-            TransitionController.SetBool("CircleTransition", false);
+
+            //TransitionController.SetBool("CircleTransition", false);
+
             ShopTeleporting = false;
-           // StartCoroutine(ShopEntrance());
+
+            // StartCoroutine(ShopEntrance());
         }
     }
     public void ApothecaryShopExit()
@@ -231,5 +237,7 @@ public class Charactermanager : MonoBehaviour
         yield return new WaitForSeconds(1);
         PickupText.text = "";
         isPickingUp = false;
+
+    
     }
 }
