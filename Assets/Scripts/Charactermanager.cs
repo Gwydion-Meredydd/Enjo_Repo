@@ -172,26 +172,26 @@ public class Charactermanager : MonoBehaviour
     {
         MoveOveride = false;
     }
-    public void ApothecaryShopEntrance()
+    public void CantMove()
+    {
+        MoveOveride = true;
+    }
+    public void ApothecaryShop()
     {
         if (ShopTeleporting == false)
         {
             ShopTeleporting = true;
-
             TransitionController.SetBool("CircleTransition", true);
-
-            //TransitionController.SetBool("CircleTransition", false);
-
+            StartCoroutine(ApothecaryShopTiming());
             ShopTeleporting = false;
-
-            // StartCoroutine(ShopEntrance());
         }
     }
-    public void ApothecaryShopExit()
+    IEnumerator ApothecaryShopTiming()
     {
-        StartCoroutine(ShopExit());
+        yield return new WaitForSeconds(1f);
+        TransitionController.SetBool("CircleTransition", false);
     }
-
+   
     public void QuestCompleted()
     {
         MoveOveride = true;
@@ -207,15 +207,6 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", false);
         ShopTeleporting = false;
     }
-    //IEnumerator ShopEntrance()
-    //{
-        //Debug.Log("Entrance");
-        //Player.gameObject.transform.position = new Vector3 (625, -44, 305);
-        //Debug.Log("Entrance2");
-        //TransitionController.SetBool("CircleTransition", true);
-        //TransitionController.SetBool("CircleTransition", false);
-        //ShopTeleporting = false;
-    //}
     IEnumerator CelebrationTiming()
     {
         yield return new WaitForSeconds(1.5f);
