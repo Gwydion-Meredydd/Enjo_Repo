@@ -39,7 +39,7 @@ public class PickUpDetection : MonoBehaviour
             TeleportCheck = true;
             if (other.gameObject.tag == "Player")
             {
-                Teleport();
+                StartCoroutine(Teleport());
             }
         }
     }
@@ -66,13 +66,15 @@ public class PickUpDetection : MonoBehaviour
         }
 
     }
-    void Teleport() 
+    IEnumerator Teleport()
     {
-
-        Player.GetComponent<CharacterController>().enabled = false;
-        Player.transform.position = new Vector3(663f, -44.87f, 289);
-        Player.GetComponent<CharacterController>().enabled = true;
         Player.SendMessage(EnterMessageToSend);
+        yield return new WaitForSeconds(0.5f);
+        Player.SendMessage(EnterMessageToSend);
+        Player.GetComponent<CharacterController>().enabled = false;
+        //Player.transform.position = new Vector3(663f, -44.87f, 289);
+        Player.transform.position = TeleportLocation.transform.position;
+        Player.GetComponent<CharacterController>().enabled = true;
     }
 
     
