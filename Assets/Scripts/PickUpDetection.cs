@@ -12,6 +12,7 @@ public class PickUpDetection : MonoBehaviour
     public GameObject TeleportLocation;
     public bool SendStayMessage;
     public bool SendExitMessage;
+    public bool Coin;
     public GameObject Player;
     // Start is called before the first frame update
 
@@ -28,7 +29,7 @@ public class PickUpDetection : MonoBehaviour
             if (other.gameObject.tag == "Player")
             {
                 other.SendMessage(EnterMessageToSend);
-                if (Input.GetButtonDown("Interact") && Destory == true)
+                if (Input.GetButtonDown("Interact") && Destory == true && Coin == true)
                 {
                     Destroy(gameObject);
                 }
@@ -46,10 +47,14 @@ public class PickUpDetection : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.tag == "Player"&& Door ==false)
+        if (other.gameObject.tag == "Player" && Door == false)
         {
-
             other.SendMessage(EnterMessageToSend);
+
+            if (Coin == false && Destory == true)
+            {
+                Destroy(gameObject);
+            }
 
 
         }
@@ -61,7 +66,9 @@ public class PickUpDetection : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
+
                 other.SendMessage(ExitMessageToSend);
+
             }
         }
 

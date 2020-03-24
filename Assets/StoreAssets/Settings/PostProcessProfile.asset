@@ -182,7 +182,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 13.77
+    value: 5.58
   threshold:
     overrideState: 1
     value: 1
@@ -1537,25 +1537,25 @@ MonoBehaviour:
   active: 1
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   mode:
     overrideState: 1
     value: 0
   color:
     overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
+    value: {r: 0.96996236, g: 1, b: 0, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.543
+    value: 0.192
   smoothness:
     overrideState: 1
-    value: 0.4
+    value: 0.489
   roundness:
     overrideState: 1
-    value: 0
+    value: 1
   rounded:
     overrideState: 1
     value: 0
@@ -1583,16 +1583,16 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   focusDistance:
-    overrideState: 0
+    overrideState: 1
     value: 10
   aperture:
-    overrideState: 0
+    overrideState: 1
     value: 5.6
   focalLength:
-    overrideState: 0
+    overrideState: 1
     value: 50
   kernelSize:
-    overrideState: 0
+    overrideState: 1
     value: 1
 --- !u!114 &5540350115710989850
 MonoBehaviour:

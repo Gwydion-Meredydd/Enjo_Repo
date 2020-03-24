@@ -164,6 +164,10 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(TextPickupTimer());
         }
     }
+    public void QuestReached() 
+    {
+        QuestManger.SendMessage("QuestCompleted");
+    }
     public void CantGrab() 
     {
         PickupText.text = "";
