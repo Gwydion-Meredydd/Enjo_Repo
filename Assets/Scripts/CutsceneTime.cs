@@ -14,6 +14,7 @@ public class CutsceneTime : MonoBehaviour
 
     IEnumerator CutsceneTiming()
     {
+        Player.SendMessage("CantMove");
         yield return new WaitForSeconds(WaitTime);
         Player.SendMessage("CanMove");
 

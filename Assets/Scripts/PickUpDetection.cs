@@ -7,6 +7,8 @@ public class PickUpDetection : MonoBehaviour
     public string EnterMessageToSend;
     public string ExitMessageToSend;
     public bool Destory;
+    public bool NPC;
+    public bool HasSpoken;
     public bool Door;
     public bool TeleportCheck;
     public GameObject TeleportLocation;
@@ -58,6 +60,17 @@ public class PickUpDetection : MonoBehaviour
 
 
         }
+        if (NPC == true && HasSpoken == false)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                gameObject.SendMessage(EnterMessageToSend);
+                HasSpoken = true;
+                Player.SendMessage("CantMove");
+
+            }
+        }
+
     }
     void OnTriggerExit(Collider other)
     {

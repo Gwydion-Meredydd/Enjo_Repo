@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Conversation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public ConversationContex Dialouge;
+    
+    public void ConversationTrigger() 
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        FindObjectOfType<ConversationManger>().StartDialouge(Dialouge);
     }
 }

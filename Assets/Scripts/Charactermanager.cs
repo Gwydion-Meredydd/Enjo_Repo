@@ -179,6 +179,10 @@ public class Charactermanager : MonoBehaviour
     public void CantMove()
     {
         MoveOveride = true;
+        CharacterAnimator.SetBool("Run", false);
+        CharacterAnimator.SetBool("Jump", false);
+        CharacterAnimator.SetFloat("X_Input", 0);
+        CharacterAnimator.SetFloat("Y_Input", 0);
     }
     public void ApothecaryShop()
     {
