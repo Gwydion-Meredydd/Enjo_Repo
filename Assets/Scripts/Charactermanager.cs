@@ -27,7 +27,7 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float SprintSpeed = 3f;
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
-    [SerializeField] bool MoveOveride;
+    [SerializeField] bool MoveOveride, Moving;
     public  GameObject ShopLocationsEnter;
     public GameObject ShopLocationsExit;
     public Animator TransitionController;
@@ -100,27 +100,29 @@ public class Charactermanager : MonoBehaviour
         Vector3 moveDirection = DisiredMoveDirection * (movementSpeed * Time.deltaTime);
         moveDirection = new Vector3(moveDirection.x, gravity, moveDirection.z);
 
+
         character_Controller.Move(moveDirection);
 
         if (character_Controller.isGrounded) 
         {
-            //gravity = 0;
-            if (Input.GetButtonDown("Jump"))
-            {
-                CharacterAnimator.SetBool("PreJump", true);
-            }
+            
             if (Input.GetButtonUp("Jump"))
             {
-                if (CanJump == true)
+                CharacterAnimator.SetBool("Jump", false);
+                if (Moving == false)
                 {
-                    CharacterAnimator.SetBool("PreJump", false);
-                    CharacterAnimator.SetBool("Jump", true);
-                    gravity = JumpSpeed;
-                }
-                if (CanJump == false) 
-                {
-                    CharacterAnimator.SetBool("PreJump", false);
-                    CharacterAnimator.SetBool("Jump", false);
+
+                    if (CanJump == true)
+                    {
+                        CharacterAnimator.SetBool("PreJump", false);
+                        CharacterAnimator.SetBool("Jump", true);
+                        gravity = JumpSpeed;
+                    }
+                    if (CanJump == false)
+                    {
+                        CharacterAnimator.SetBool("PreJump", false);
+                        CharacterAnimator.SetBool("Jump", false);
+                    }
                 }
             }
             else if (character_Controller.isGrounded)
@@ -130,15 +132,30 @@ public class Charactermanager : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump"))
         {
-            CharacterAnimator.SetBool("PreJump", true);
+            if (Moving == false)
+            {
+                CharacterAnimator.SetBool("PreJump", true);
+            }
+            if (Moving == true) 
+            {
+                CharacterAnimator.SetBool("Jump", true);
+            }
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("ctrl"))
         {
             CharacterAnimator.SetBool("PreJump", true);
         }
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("ctrl"))
         {
             CharacterAnimator.SetBool("PreJump", false);
+        }
+        if (InputZ != 0 || InputX != 0 )
+        {
+            Moving = true;
+        }
+        else 
+        {
+            Moving = false;
         }
     }
     public void JumpEvent() 
