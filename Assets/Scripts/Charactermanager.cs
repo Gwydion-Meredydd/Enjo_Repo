@@ -27,10 +27,16 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float SprintSpeed = 3f;
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
-    [SerializeField] bool MoveOveride, Moving;
+    [SerializeField] bool MoveOveride, Moving, CanSprint = true;
     public  GameObject ShopLocationsEnter;
     public GameObject ShopLocationsExit;
     public Animator TransitionController;
+    [Header ("Fists")]
+    public GameObject[] PlayerHitColliders;
+    [Header("Sword")]
+    public GameObject[] SwordHitColliders;
+    public int HitAmmount;
+    public bool Attacking;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +65,7 @@ public class Charactermanager : MonoBehaviour
     {
         
         Speed = new Vector2(InputX, InputZ).sqrMagnitude;
-        if (InputSprint == 1) 
+        if (InputSprint == 1 && CanSprint == true) 
         {
             movementSpeed = SprintSpeed;
             CharacterAnimator.SetBool("Run", true);
@@ -157,6 +163,20 @@ public class Charactermanager : MonoBehaviour
         {
             Moving = false;
         }
+        if (Input.GetButtonDown("Fire1")) 
+        {
+            Attacking = true;
+            CharacterAnimator.SetBool("Attack", true);
+            CanSprint = false;
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            Attacking = false;
+            CharacterAnimator.SetBool("Attack", false);
+            CanSprint = true;
+            movementSpeed = OriginalSpeed;
+            CharacterAnimator.SetBool("Run", false);
+        }
     }
     public void JumpEvent() 
     {
@@ -209,6 +229,24 @@ public class Charactermanager : MonoBehaviour
             TransitionController.SetBool("CircleTransition", true);
             StartCoroutine(ApothecaryShopTiming());
             ShopTeleporting = false;
+        }
+    }
+    public void FistHit(GameObject HitObject)
+    {
+        if (Attacking == true)
+        {
+            HitAmmount = 50;
+            HitObject.SendMessage("Damage", HitAmmount);
+            Debug.Log("FirtHit");
+            Debug.Log(HitObject.name);
+        }
+    }
+    public void SwordHit(GameObject HitObject)
+    {
+        if (Attacking == true)
+        {
+            HitAmmount = 100;
+            HitObject.SendMessage("Damage", HitAmmount);
         }
     }
     IEnumerator ApothecaryShopTiming()
