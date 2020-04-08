@@ -6,7 +6,7 @@ public class EnemyDamage : MonoBehaviour
 {
     public GameObject DamageUI;
     public Text DamageText;
-
+    public GameObject QuestManager;
     public int Health;
     public bool Enemey;
     public bool ScareCrow;
@@ -17,8 +17,6 @@ public class EnemyDamage : MonoBehaviour
     }
     public void Damage(int HitAmmount) 
     {
-       
-        Debug.Log("DD");
         if (Enemey == true)
         { 
 
@@ -29,6 +27,7 @@ public class EnemyDamage : MonoBehaviour
             Health = Health - HitAmmount;
             if (Health == 0) 
             {
+                QuestManager.SendMessage("ScareCrow");
                 Rididbody_.isKinematic = false;
             }
         }

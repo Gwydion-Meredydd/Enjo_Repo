@@ -11,9 +11,11 @@ public class QuestsController : MonoBehaviour
     public Animator QuestText;
     public Text Objective;
     public GameObject[] Border;
+    public GameObject[] Guard;
     public GameObject[] VCams;
     public int GrabAmmount;
     public int CoinAmmount;
+    public int ScareCrowValue;
     public Text CoinAmmountText;
     public void QuestCompleted()
     {
@@ -45,13 +47,28 @@ public class QuestsController : MonoBehaviour
                 QuestText.SetBool("Complete", true);
                 yield return new WaitForSeconds(2.2f);
                 QuestText.SetBool("Complete", false);
-                Border[2].SetActive(false);
-                Objective.text = "Visit the Apothecary Shop";
+                Border[3].SetActive(false);
+                Objective.text = "Take-down the scarecrows";
+                break;
+            case 3:
+                QuestText.SetBool("Complete", true);
+                yield return new WaitForSeconds(2.2f);
+                Border[4].SetActive(false);
+                Guard[0].SetActive(false);
+                Guard[1].SetActive(true);
+                Objective.text = "Speed to 3 villagers";
                 break;
         }
     }
 
-
+    public void ScareCrow() 
+    {
+        ScareCrowValue = ScareCrowValue + 1;
+        if (ScareCrowValue == 5) 
+        {
+            QuestCompleted();
+        }
+    }
     public void Grab()
     {
         GrabAmmount++;

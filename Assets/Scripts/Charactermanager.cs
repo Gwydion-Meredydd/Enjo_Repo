@@ -237,8 +237,6 @@ public class Charactermanager : MonoBehaviour
         {
             HitAmmount = 50;
             HitObject.SendMessage("Damage", HitAmmount);
-            Debug.Log("FirtHit");
-            Debug.Log(HitObject.name);
         }
     }
     public void SwordHit(GameObject HitObject)
@@ -259,6 +257,10 @@ public class Charactermanager : MonoBehaviour
     {
         MoveOveride = true;
         CharacterAnimator.SetBool("Celebrate", true);
+        CharacterAnimator.SetBool("Attack", false);
+        CharacterAnimator.SetBool("Jump", false);
+        Attacking = false;
+        CanSprint = true;
         StartCoroutine(CelebrationTiming());
 
     }

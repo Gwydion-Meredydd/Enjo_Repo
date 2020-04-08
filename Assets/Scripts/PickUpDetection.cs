@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUpDetection : MonoBehaviour
 {
@@ -15,7 +16,10 @@ public class PickUpDetection : MonoBehaviour
     public bool SendStayMessage;
     public bool SendExitMessage;
     public bool Coin;
+    public bool Guard;
+    public Text InteractText;
     public GameObject Player;
+    public GameObject QuestManager;
     // Start is called before the first frame update
 
     private void Start()
@@ -45,6 +49,21 @@ public class PickUpDetection : MonoBehaviour
                 StartCoroutine(Teleport());
             }
         }
+        if (NPC == true && Guard == false && HasSpoken == false) 
+        {
+            gameObject.SendMessage("PlayerEnter");
+            InteractText.text = "Press E to interact";
+            if (Input.GetButtonDown("Interact"))
+            {
+                InteractText.text = "";
+                HasSpoken = true;
+                Debug.Log("HEY");
+                QuestManager.SendMessage("VillagerSpoken");
+                gameObject.SendMessage(EnterMessageToSend);
+                HasSpoken = true;
+                Player.SendMessage("CantMove");
+            }
+        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -64,10 +83,25 @@ public class PickUpDetection : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                gameObject.SendMessage(EnterMessageToSend);
-                HasSpoken = true;
-                Player.SendMessage("CantMove");
+                if (Guard == true)
+                {
 
+                    gameObject.SendMessage(EnterMessageToSend);
+                    HasSpoken = true;
+                    Player.SendMessage("CantMove");
+                }
+                else 
+                {
+                    InteractText.text = "Press E to interact";
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        Debug.Log("HEY");
+                        QuestManager.SendMessage("VillagerSpoken");
+                        gameObject.SendMessage(EnterMessageToSend);
+                        HasSpoken = true;
+                        Player.SendMessage("CantMove");
+                    }
+                }
             }
         }
 
@@ -83,6 +117,11 @@ public class PickUpDetection : MonoBehaviour
                 other.SendMessage(ExitMessageToSend);
 
             }
+        }
+        if (NPC == true && Guard == false) 
+        {
+            InteractText.text = "";
+            gameObject.SendMessage("PlayerExit");
         }
 
     }

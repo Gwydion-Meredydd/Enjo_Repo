@@ -33,6 +33,23 @@ public class VillagerNPC : MonoBehaviour
             NewCurrentTarget();
         }
     }
+    public void PlayerEnter() 
+    {
+        NavMesh.isStopped = true;
+        Debug.Log("DD");
+        VillagerAnimater.SetBool("Walking", false);
+        VillagerAnimater.SetBool("Talking", true);
+        NavMesh.speed = 0;
+    }
+    public void PlayerExit() 
+    {
+        NavMesh.isStopped = false;
+        Debug.Log("DDD");
+        VillagerAnimater.SetBool("Walking", true);
+        VillagerAnimater.SetBool("Talking", false);
+        NavMesh.speed = 5;
+        NavMesh.destination = CurrentTarget.transform.position;
+    }
     IEnumerator NewCurrentTarget() 
     {
         yield return new WaitForSeconds(2);
