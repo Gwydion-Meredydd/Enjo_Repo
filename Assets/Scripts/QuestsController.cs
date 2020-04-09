@@ -13,6 +13,7 @@ public class QuestsController : MonoBehaviour
     public GameObject[] Border;
     public GameObject[] Guard;
     public GameObject[] VCams;
+    public GameObject MerchantController;
     public int GrabAmmount;
     public int CoinAmmount;
     public int ScareCrowValue;
@@ -78,5 +79,9 @@ public class QuestsController : MonoBehaviour
         {
             QuestCompleted();
         }
+    }
+    public void GetCoinAmmount() 
+    {
+        MerchantController.SendMessage("CoinReciver", CoinAmmount);
     }
 }

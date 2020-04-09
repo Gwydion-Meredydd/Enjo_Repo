@@ -13,12 +13,12 @@ public class Charactermanager : MonoBehaviour
     public CinemachineVirtualCamera ThirdPersonCamera;
     private Camera Cam;
     private CharacterController character_Controller;
-    private bool CanJump,ShopTeleporting = false, isPickingUp = false;
+    private bool CanJump, ShopTeleporting = false, isPickingUp = false;
     public Text PickupText;
 
     private Vector3 DisiredMoveDirection;
 
-    [SerializeField] GameObject QuestManger;
+    [SerializeField] GameObject QuestManger, PotionsUI;
     [SerializeField] Animator CharacterAnimator;
     [Range(0.001f, 1f)]
     [SerializeField] float RotationSpeed = 0.3f;
@@ -28,15 +28,22 @@ public class Charactermanager : MonoBehaviour
     [SerializeField] float JumpSpeed = 5f;
     [SerializeField] float gravity;
     [SerializeField] bool MoveOveride, Moving, CanSprint = true;
-    public  GameObject ShopLocationsEnter;
+    public GameObject ShopLocationsEnter;
     public GameObject ShopLocationsExit;
     public Animator TransitionController;
-    [Header ("Fists")]
+    [Header("Fists")]
     public GameObject[] PlayerHitColliders;
     [Header("Sword")]
     public GameObject[] SwordHitColliders;
     public int HitAmmount;
     public bool Attacking;
+    public float Health;
+    public float Shield;
+    public float Mana;
+    public int HitMultiplier;
+    public GameObject Bottle;
+    public bool Potion;
+    public Slider HealthBar,ManaBar,ShieldBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +53,9 @@ public class Charactermanager : MonoBehaviour
         character_Controller = GetComponent<CharacterController>();
         Cam = Camera.main;
         OriginalSpeed = movementSpeed;
+        HealthBar.value = Health;
+        ManaBar.value = Mana;
+        ShieldBar.value = Shield;
     }
 
     // Update is called once per frame
@@ -63,14 +73,14 @@ public class Charactermanager : MonoBehaviour
     }
     void InputDecider()
     {
-        
+
         Speed = new Vector2(InputX, InputZ).sqrMagnitude;
-        if (InputSprint == 1 && CanSprint == true) 
+        if (InputSprint == 1 && CanSprint == true)
         {
             movementSpeed = SprintSpeed;
             CharacterAnimator.SetBool("Run", true);
         }
-        else 
+        else
         {
             movementSpeed = OriginalSpeed;
             CharacterAnimator.SetBool("Run", false);
@@ -79,7 +89,7 @@ public class Charactermanager : MonoBehaviour
         {
             RotationManager();
         }
-        else 
+        else
         {
             DisiredMoveDirection = Vector3.zero;
         }
@@ -99,7 +109,7 @@ public class Charactermanager : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(DisiredMoveDirection), RotationSpeed);
     }
-    void MovementManger() 
+    void MovementManger()
     {
         gravity -= 2.5f * Time.deltaTime;
         CharacterAnimator.SetFloat("X_Input", Speed);
@@ -109,9 +119,9 @@ public class Charactermanager : MonoBehaviour
 
         character_Controller.Move(moveDirection);
 
-        if (character_Controller.isGrounded) 
+        if (character_Controller.isGrounded)
         {
-            
+            CharacterAnimator.SetBool("Jump", false);
             if (Input.GetButtonUp("Jump"))
             {
                 CharacterAnimator.SetBool("Jump", false);
@@ -142,9 +152,10 @@ public class Charactermanager : MonoBehaviour
             {
                 CharacterAnimator.SetBool("PreJump", true);
             }
-            if (Moving == true) 
+            if (Moving == true)
             {
                 CharacterAnimator.SetBool("Jump", true);
+                gravity = JumpSpeed;
             }
         }
         if (Input.GetButtonDown("ctrl"))
@@ -155,15 +166,32 @@ public class Charactermanager : MonoBehaviour
         {
             CharacterAnimator.SetBool("PreJump", false);
         }
-        if (InputZ != 0 || InputX != 0 )
+        if (Input.GetButtonDown("Potion"))
+        {
+            if (Potion == false)
+            {
+                Time.timeScale = 0.25f;
+                Cursor.lockState = CursorLockMode.None;
+                PotionsUI.SetActive(true);
+                Cursor.visible = true;
+            }
+        }
+        if (Input.GetButtonUp("Potion"))
+        {
+            Time.timeScale = 1f;
+            PotionsUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        if (InputZ != 0 || InputX != 0)
         {
             Moving = true;
         }
-        else 
+        else
         {
             Moving = false;
         }
-        if (Input.GetButtonDown("Fire1")) 
+        if (Input.GetButtonDown("Fire1"))
         {
             Attacking = true;
             CharacterAnimator.SetBool("Attack", true);
@@ -178,7 +206,7 @@ public class Charactermanager : MonoBehaviour
             CharacterAnimator.SetBool("Run", false);
         }
     }
-    public void JumpEvent() 
+    public void JumpEvent()
     {
         CanJump = true;
     }
@@ -188,24 +216,70 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetBool("Jump", false);
         gravity = 0;
     }
+    public void PotionSelected(int PotionValue)
+    {
+        Potion = true;
+        PotionsUI.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        CharacterAnimator.SetBool("Potion", true);
+        switch (PotionValue)
+        {
+            case 1:
+                if (Health < 100)
+                {
+                    Health = 100;
+                    HealthBar.value = Health;
+                }
+                break;
+            case 2:
+                if (Mana < 100)
+                {
+                    Mana = 100;
+                    ManaBar.value = Mana;
+                }
+                break;
+            case 3:
+                if (Shield < 100)
+                {
+                    Shield = 100;
+                    ShieldBar.value = Shield;
+                }
+                break;
+            case 4:
+                StartCoroutine(JumpBoost());
+                break;
+            case 5:
+                StartCoroutine(SpeedBoost());
+                break;
+            case 6:
+                StartCoroutine(StrengthBoost());
+                break;
+
+        }
+        StartCoroutine(PotionTiming());
+    }
     public void CanGrab()
     {
         PickupText.text = "Press 'E' to pickup item!";
-        if (Input.GetButtonDown("Interact")&& isPickingUp == false)
+        if (Input.GetButtonDown("Interact") && isPickingUp == false)
         {
             MoveOveride = true;
             isPickingUp = true;
             PickupText.text = "You Collected a coin!";
             CharacterAnimator.SetBool("Grab", true);
+            CharacterAnimator.SetBool("Run", false);
+            CharacterAnimator.SetBool("Jump", false);
             QuestManger.SendMessage("Grab");
             StartCoroutine(TextPickupTimer());
         }
     }
-    public void QuestReached() 
+    public void QuestReached()
     {
         QuestManger.SendMessage("QuestCompleted");
     }
-    public void CantGrab() 
+    public void CantGrab()
     {
         PickupText.text = "";
     }
@@ -235,7 +309,7 @@ public class Charactermanager : MonoBehaviour
     {
         if (Attacking == true)
         {
-            HitAmmount = 50;
+            HitAmmount = (50 * HitMultiplier);
             HitObject.SendMessage("Damage", HitAmmount);
         }
     }
@@ -243,7 +317,7 @@ public class Charactermanager : MonoBehaviour
     {
         if (Attacking == true)
         {
-            HitAmmount = 100;
+            HitAmmount = (100 * HitMultiplier);
             HitObject.SendMessage("Damage", HitAmmount);
         }
     }
@@ -252,7 +326,7 @@ public class Charactermanager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
     }
-   
+
     public void QuestCompleted()
     {
         MoveOveride = true;
@@ -275,10 +349,10 @@ public class Charactermanager : MonoBehaviour
     IEnumerator CelebrationTiming()
     {
         yield return new WaitForSeconds(1.5f);
-        CharacterAnimator.SetBool("Celebrate",false);
+        CharacterAnimator.SetBool("Celebrate", false);
         MoveOveride = false;
     }
-    void JumpOff() 
+    void JumpOff()
     {
         if (gravity < 0)
         {
@@ -293,7 +367,33 @@ public class Charactermanager : MonoBehaviour
         yield return new WaitForSeconds(1);
         PickupText.text = "";
         isPickingUp = false;
-
-    
+    }
+    IEnumerator JumpBoost()
+    {
+        JumpSpeed = 1f;
+        yield return new WaitForSeconds(300);
+        JumpSpeed = 0.6F;
+    }
+    IEnumerator SpeedBoost()
+    {
+        movementSpeed = 14;
+        SprintSpeed = 24;
+        yield return new WaitForSeconds(300);
+        movementSpeed = 8;
+        SprintSpeed = 16;
+    }
+    IEnumerator StrengthBoost()
+    {
+        HitMultiplier = 2;
+        yield return new WaitForSeconds(300);
+        HitMultiplier = 1;
+    }
+    IEnumerator PotionTiming()
+    {
+        Bottle.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        Bottle.SetActive(false);
+        CharacterAnimator.SetBool("Potion", false);
+        Potion = false;
     }
 }
