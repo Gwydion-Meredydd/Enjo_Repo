@@ -10,6 +10,10 @@ public class EnemyDamage : MonoBehaviour
     public int Health;
     public bool Enemey;
     public bool ScareCrow;
+    public bool Burn;
+    public ParticleSystem Fire;
+    public GameObject[] ObjectsToDestory;
+    public MeshRenderer ScareCrowMesh;
     public Rigidbody Rididbody_;
     private void Start()
     {
@@ -38,6 +42,27 @@ public class EnemyDamage : MonoBehaviour
         if (Health <= 0)
         {
             DamageText.text = ("");
+            if (Burn == true) 
+            {
+                StartCoroutine(FireBurn());
+            }
         }
+    }
+    IEnumerator FireBurn()
+    {
+        Fire.Play();
+        yield return new WaitForSeconds(2f);
+        if (ScareCrow == true)
+        {
+            ScareCrowMesh.enabled = false;
+        }
+        for (int i = 0; i  < ObjectsToDestory.Length; i++) 
+        {
+            ObjectsToDestory[i].SetActive(false);
+            Debug.Log(i);
+
+        }
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 }

@@ -8,12 +8,16 @@ public class QuestsController : MonoBehaviour
 {
     public int QuestNumber;
     public GameObject Player;
+    public int[] Potions;
+
     public Animator QuestText;
     public Text Objective;
     public GameObject[] Border;
     public GameObject[] Guard;
     public GameObject[] VCams;
+    public GameObject[] StartingCoins;
     public GameObject MerchantController;
+    public GameObject[] ScareCrowText; 
     public int GrabAmmount;
     public int CoinAmmount;
     public int ScareCrowValue;
@@ -21,7 +25,6 @@ public class QuestsController : MonoBehaviour
     public void QuestCompleted()
     {
         QuestNumber++;
-        Player.SendMessage("QuestCompleted");
         StartCoroutine(QuestTextTiming());
 
     }
@@ -30,6 +33,13 @@ public class QuestsController : MonoBehaviour
         switch (QuestNumber)
         {
             case 1:
+                Objective.text = "Collect Enjo's property";
+                StartingCoins[0].SetActive(true);
+                StartingCoins[1].SetActive(true);
+                StartingCoins[2].SetActive(true);
+                break;
+            case 2:
+                Player.SendMessage("QuestCompleted");
                 QuestText.SetBool("Complete", true);
                 yield return new WaitForSeconds(2.2f);
                 QuestText.SetBool("Complete", false);
@@ -44,20 +54,29 @@ public class QuestsController : MonoBehaviour
                 Border[1].SetActive(false);
                 Objective.text = "Go to the market";
                 break;
-            case 2:
-                QuestText.SetBool("Complete", true);
-                yield return new WaitForSeconds(2.2f);
-                QuestText.SetBool("Complete", false);
-                Border[3].SetActive(false);
-                Objective.text = "Take-down the scarecrows";
-                break;
             case 3:
+                Border[3].SetActive(false);
+                Objective.text = "Talk to the guard";
+                break;
+            case 4:
+                Objective.text = "Take-down the scarecrows";
+                ScareCrowText[0].SetActive(true);
+                ScareCrowText[1].SetActive(true);
+                ScareCrowText[2].SetActive(true);
+                ScareCrowText[3].SetActive(true);
+                ScareCrowText[4].SetActive(true);
+                ScareCrowText[5].SetActive(true);
+                break;
+            case 5:
                 QuestText.SetBool("Complete", true);
+                ScareCrowText[5].SetActive(true);
                 yield return new WaitForSeconds(2.2f);
+                Border[2].SetActive(false);
                 Border[4].SetActive(false);
                 Guard[0].SetActive(false);
                 Guard[1].SetActive(true);
-                Objective.text = "Speed to 3 villagers";
+                ScareCrowText[5].SetActive(false);
+                Objective.text = "Speek to 3 villagers";
                 break;
         }
     }

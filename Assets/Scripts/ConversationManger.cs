@@ -27,6 +27,7 @@ public class ConversationManger : MonoBehaviour
     // Update is called once per frame
     public void StartDialouge(ConversationContex Dialouge) 
     {
+        Player.SendMessage("CantMove");
         animator.SetBool("OnScreen", true);
         NameText.text = Dialouge.name;
         sentences.Clear();

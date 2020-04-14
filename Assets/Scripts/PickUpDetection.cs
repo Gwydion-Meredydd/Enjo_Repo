@@ -17,6 +17,7 @@ public class PickUpDetection : MonoBehaviour
     public bool SendExitMessage;
     public bool Coin;
     public bool Guard;
+    public bool NPCQuest;
     public Text InteractText;
     public GameObject Player;
     public GameObject QuestManager;
@@ -51,14 +52,20 @@ public class PickUpDetection : MonoBehaviour
         }
         if (NPC == true && Guard == false && HasSpoken == false) 
         {
-            gameObject.SendMessage("PlayerEnter");
+            if (NPCQuest == false)
+            {
+                gameObject.SendMessage("PlayerEnter");
+            }
             InteractText.text = "Press E to interact";
             if (Input.GetButtonDown("Interact"))
             {
                 InteractText.text = "";
                 HasSpoken = true;
                 Debug.Log("HEY");
-                QuestManager.SendMessage("VillagerSpoken");
+                if (NPCQuest == false)
+                {
+                    QuestManager.SendMessage("VillagerSpoken");
+                }
                 gameObject.SendMessage(EnterMessageToSend);
                 HasSpoken = true;
                 Player.SendMessage("CantMove");
@@ -111,14 +118,28 @@ public class PickUpDetection : MonoBehaviour
         TeleportCheck = false;
         if (SendExitMessage == true)
         {
-            if (other.gameObject.tag == "Player")
+            if (NPCQuest == false)
             {
-
-                other.SendMessage(ExitMessageToSend);
-
+                if (other.gameObject.tag == "Player")
+                {
+                    other.SendMessage(ExitMessageToSend);
+                }
+            }
+            if (NPCQuest == true) 
+            {
+                if (HasSpoken == true) 
+                {
+                    if (other.gameObject.tag == "Player")
+                    {
+                        QuestManager.SendMessage(ExitMessageToSend);
+                        Debug.Log("SendingExit");
+                        NPCQuest = false;
+                        SendExitMessage = false;
+                    }
+                }
             }
         }
-        if (NPC == true && Guard == false) 
+        if (NPC == true && Guard == false && NPCQuest == false) 
         {
             InteractText.text = "";
             gameObject.SendMessage("PlayerExit");

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class MerchantManager : MonoBehaviour
 {
-    public int CoinValue;
+    public int Coin_Ammount;
     public GameObject QuestManager;
    public void HealthPotion() 
     {
         QuestManager.SendMessage("GetCoinAmmount");
+        if (Coin_Ammount <= 60)
+        {
+
+        }
     }
     public void ShieldPotion() 
     {
@@ -32,6 +36,6 @@ public class MerchantManager : MonoBehaviour
     }
     public void CoinReciver(int CoinAmmount) 
     {
-        CoinValue = CoinAmmount;
+        Coin_Ammount = CoinAmmount;
     }
 }

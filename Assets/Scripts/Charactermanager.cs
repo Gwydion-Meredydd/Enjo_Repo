@@ -8,6 +8,7 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class Charactermanager : MonoBehaviour
 {
+    public bool DeveloperMode;
     public GameObject Player;
     private float InputX, InputZ, InputSprint, Speed, OriginalSpeed;
     public CinemachineVirtualCamera ThirdPersonCamera;
@@ -15,6 +16,8 @@ public class Charactermanager : MonoBehaviour
     private CharacterController character_Controller;
     private bool CanJump, ShopTeleporting = false, isPickingUp = false;
     public Text PickupText;
+
+    public PotionsClass PotionAmmountSave;
 
     private Vector3 DisiredMoveDirection;
 
@@ -43,7 +46,9 @@ public class Charactermanager : MonoBehaviour
     public int HitMultiplier;
     public GameObject Bottle;
     public bool Potion;
-    public Slider HealthBar,ManaBar,ShieldBar;
+    public int Potion_Ammount;
+    public Text[] Potion_AmmountText;
+    public Slider HealthBar, ManaBar, ShieldBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -146,7 +151,7 @@ public class Charactermanager : MonoBehaviour
                 JumpOff();
             }
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && character_Controller.isGrounded)
         {
             if (Moving == false)
             {
@@ -174,6 +179,7 @@ public class Charactermanager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 PotionsUI.SetActive(true);
                 Cursor.visible = true;
+                CantMove();
             }
         }
         if (Input.GetButtonUp("Potion"))
@@ -182,6 +188,7 @@ public class Charactermanager : MonoBehaviour
             PotionsUI.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            CanMove();
         }
         if (InputZ != 0 || InputX != 0)
         {
@@ -216,7 +223,79 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetBool("Jump", false);
         gravity = 0;
     }
-    public void PotionSelected(int PotionValue)
+    public void PotionAmmount(int PotionValue)
+    {
+        Potion_Ammount = PotionValue;
+        switch (PotionValue)
+        {
+            case 1:
+                Potion_Ammount = PotionAmmountSave.HealthPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Health Potion " + Potion_Ammount.ToString());
+                break;
+            case 2:
+                Potion_Ammount = PotionAmmountSave.ManaPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Mana Potion " + Potion_Ammount.ToString());
+                break;
+            case 3:
+                Potion_Ammount = PotionAmmountSave.ShieldPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Shield Potion " + Potion_Ammount.ToString());
+                break;
+            case 4:
+                Potion_Ammount = PotionAmmountSave.JumpPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Jump Potion " + Potion_Ammount.ToString());
+                break;
+            case 5:
+                Potion_Ammount = PotionAmmountSave.SpeeedPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Speed Potion " + Potion_Ammount.ToString());
+                break;
+            case 6:
+                Potion_Ammount = PotionAmmountSave.StrengthPotion;
+                Potion_AmmountText[(PotionValue - 1)].text = ("Strength Potion " + Potion_Ammount.ToString());
+                break;
+        }
+        if (DeveloperMode == true) 
+        {
+            Potion_Ammount =  1;
+        }
+    }
+    public void SetPotionAmmount(int Potion_Value)
+    {
+        if (DeveloperMode == true)
+        {
+            Potion_Ammount = Potion_Ammount + 1;
+        }
+        switch (Potion_Value)
+        {
+
+            case 1:
+                PotionAmmountSave.HealthPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Health Potion " + Potion_Ammount.ToString());
+                break;
+            case 2:
+                PotionAmmountSave.ManaPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Mana Potion " + Potion_Ammount.ToString());
+                break;
+            case 3:
+                PotionAmmountSave.ShieldPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Shield Potion " + Potion_Ammount.ToString());
+                break;
+            case 4:
+                PotionAmmountSave.JumpPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Jump Potion " + Potion_Ammount.ToString());
+                break;
+            case 5:
+                PotionAmmountSave.SpeeedPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Speed Potion " + Potion_Ammount.ToString());
+                break;
+            case 6:
+                PotionAmmountSave.StrengthPotion = Potion_Ammount;
+                Potion_AmmountText[(Potion_Value - 1)].text = ("Strength Potion " + Potion_Ammount.ToString());
+                break;
+        }
+    }
+    
+
+    public void PotionSelected (int PotionValue)
     {
         Potion = true;
         PotionsUI.SetActive(false);
@@ -224,40 +303,62 @@ public class Charactermanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         CharacterAnimator.SetBool("Potion", true);
+        PotionAmmount(PotionValue);
         switch (PotionValue)
         {
+            
             case 1:
                 if (Health < 100)
                 {
-                    Health = 100;
-                    HealthBar.value = Health;
+                    if (Potion_Ammount < 0)
+                    {
+                        Health = 100;
+                        HealthBar.value = Health;
+                    }
                 }
                 break;
             case 2:
                 if (Mana < 100)
                 {
-                    Mana = 100;
-                    ManaBar.value = Mana;
+                    if (Potion_Ammount < 0)
+                    {
+                        Mana = 100;
+                        ManaBar.value = Mana;
+                    }
                 }
                 break;
             case 3:
                 if (Shield < 100)
                 {
-                    Shield = 100;
-                    ShieldBar.value = Shield;
+                    if (Potion_Ammount < 0)
+                    {
+                        Shield = 100;
+                        ShieldBar.value = Shield;
+                    }
                 }
                 break;
             case 4:
-                StartCoroutine(JumpBoost());
+                if (Potion_Ammount < 0)
+                {
+                    StartCoroutine(JumpBoost());
+                }
                 break;
             case 5:
-                StartCoroutine(SpeedBoost());
+                if (Potion_Ammount < 0)
+                {
+                    StartCoroutine(SpeedBoost());
+                }
                 break;
             case 6:
-                StartCoroutine(StrengthBoost());
+                if (Potion_Ammount < 0)
+                {
+                    StartCoroutine(StrengthBoost());
+                }
                 break;
 
         }
+        Potion_Ammount = Potion_Ammount - 1;
+        SetPotionAmmount(PotionValue);
         StartCoroutine(PotionTiming());
     }
     public void CanGrab()
@@ -278,6 +379,7 @@ public class Charactermanager : MonoBehaviour
     public void QuestReached()
     {
         QuestManger.SendMessage("QuestCompleted");
+        Debug.Log("QUESTrEACHED");
     }
     public void CantGrab()
     {
@@ -393,6 +495,7 @@ public class Charactermanager : MonoBehaviour
         Bottle.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         Bottle.SetActive(false);
+        CanMove();
         CharacterAnimator.SetBool("Potion", false);
         Potion = false;
     }
