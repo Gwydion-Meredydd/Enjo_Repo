@@ -61,6 +61,21 @@ public class Charactermanager : MonoBehaviour
         HealthBar.value = Health;
         ManaBar.value = Mana;
         ShieldBar.value = Shield;
+        if (DeveloperMode == true) 
+        {
+            PotionAmmountSave.HealthPotion = 3;
+            Potion_AmmountText[(0)].text = ("Health Potion " + "3");
+            PotionAmmountSave.ManaPotion = 3;
+            Potion_AmmountText[(1)].text = ("Mana Potion " + "3");
+            PotionAmmountSave.ShieldPotion = 3;
+            Potion_AmmountText[(2)].text = ("Shield Potion " + "3");
+            PotionAmmountSave.JumpPotion = 3;
+            Potion_AmmountText[(3)].text = ("Jump Potion " + "3");
+            PotionAmmountSave.SpeeedPotion = 3;
+            Potion_AmmountText[(4)].text = ("Speed Potion " + "3");
+            PotionAmmountSave.StrengthPotion = 3;
+            Potion_AmmountText[(5)].text = ("Strength Potion " + "3");
+        }
     }
 
     // Update is called once per frame
@@ -200,9 +215,28 @@ public class Charactermanager : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            Attacking = true;
-            CharacterAnimator.SetBool("Attack", true);
-            CanSprint = false;
+            if (Mana > 0f)
+            {
+                Debug.Log("attackingggg");
+                Attacking = true;
+                CharacterAnimator.SetBool("Attack", true);
+                CanSprint = false;
+                ManaBar.value = Mana;
+                Debug.Log("attg");
+            }
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            Mana -= 0.25f;
+            ManaBar.value = Mana;
+            if (Mana < 0)
+            {
+                Attacking = false;
+                CharacterAnimator.SetBool("Attack", false);
+                CanSprint = true;
+                movementSpeed = OriginalSpeed;
+                CharacterAnimator.SetBool("Run", false);
+            }
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -211,6 +245,10 @@ public class Charactermanager : MonoBehaviour
             CanSprint = true;
             movementSpeed = OriginalSpeed;
             CharacterAnimator.SetBool("Run", false);
+        }
+        if (Mana < 100 && Attacking == false) 
+        {
+            StartCoroutine(ManaBarRejen());
         }
     }
     public void JumpEvent()
@@ -310,7 +348,7 @@ public class Charactermanager : MonoBehaviour
             case 1:
                 if (Health < 100)
                 {
-                    if (Potion_Ammount < 0)
+                    if (Potion_Ammount > 0)
                     {
                         Health = 100;
                         HealthBar.value = Health;
@@ -320,7 +358,7 @@ public class Charactermanager : MonoBehaviour
             case 2:
                 if (Mana < 100)
                 {
-                    if (Potion_Ammount < 0)
+                    if (Potion_Ammount > 0)
                     {
                         Mana = 100;
                         ManaBar.value = Mana;
@@ -330,7 +368,7 @@ public class Charactermanager : MonoBehaviour
             case 3:
                 if (Shield < 100)
                 {
-                    if (Potion_Ammount < 0)
+                    if (Potion_Ammount > 0)
                     {
                         Shield = 100;
                         ShieldBar.value = Shield;
@@ -338,19 +376,19 @@ public class Charactermanager : MonoBehaviour
                 }
                 break;
             case 4:
-                if (Potion_Ammount < 0)
+                if (Potion_Ammount > 0)
                 {
                     StartCoroutine(JumpBoost());
                 }
                 break;
             case 5:
-                if (Potion_Ammount < 0)
+                if (Potion_Ammount > 0)
                 {
                     StartCoroutine(SpeedBoost());
                 }
                 break;
             case 6:
-                if (Potion_Ammount < 0)
+                if (Potion_Ammount > 0)
                 {
                     StartCoroutine(StrengthBoost());
                 }
@@ -498,5 +536,33 @@ public class Charactermanager : MonoBehaviour
         CanMove();
         CharacterAnimator.SetBool("Potion", false);
         Potion = false;
+    }
+    IEnumerator ManaBarRejen()
+    {
+        if (Attacking == false)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (Attacking == false)
+            {
+                yield return new WaitForSeconds(1f);
+
+                if (Attacking == false)
+                {
+                    yield return new WaitForSeconds(1f);
+
+                    if (Attacking == false)
+                    {
+                        yield return new WaitForSeconds(1f);
+                        if (Mana < 100 && Attacking == false)
+                        {
+                            Mana += 0.5f;
+                            ManaBar.value = Mana;
+                            StartCoroutine(ManaBarRejen());
+                        }
+                    }
+                }
+            }
+        }
     }
 }

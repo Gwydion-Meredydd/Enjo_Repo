@@ -7,6 +7,7 @@ public class EnemyDamage : MonoBehaviour
     public GameObject DamageUI;
     public Text DamageText;
     public GameObject QuestManager;
+    public Animator EnemeyAnimator;
     public int Health;
     public bool Enemey;
     public bool ScareCrow;
@@ -50,6 +51,10 @@ public class EnemyDamage : MonoBehaviour
     }
     IEnumerator FireBurn()
     {
+        if (ScareCrow == true) 
+        {
+            EnemeyAnimator.SetBool("Dead", true);
+        }
         Fire.Play();
         yield return new WaitForSeconds(2f);
         if (ScareCrow == true)
