@@ -21,12 +21,13 @@ public class PickUpDetection : MonoBehaviour
     public Text InteractText;
     public GameObject Player;
     public GameObject QuestManager;
+    public AudioSource coinSound;
+ 
     // Start is called before the first frame update
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");
-
     }
 
     void OnTriggerStay(Collider other)
@@ -38,7 +39,10 @@ public class PickUpDetection : MonoBehaviour
                 other.SendMessage(EnterMessageToSend);
                 if (Input.GetButtonDown("Interact") && Destory == true && Coin == true)
                 {
+                    coinSound.Play();
+                    
                     Destroy(gameObject);
+                    
                 }
             }
         }
