@@ -6,6 +6,7 @@ public class Subtitles : MonoBehaviour
 {
     public GameObject textBox;
     public GameObject enjo;
+    public float WaitTime;
     void Start()
     {
         StartCoroutine(subSequence());
@@ -13,7 +14,7 @@ public class Subtitles : MonoBehaviour
 
     IEnumerator subSequence()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(WaitTime);
         enjo.SendMessage("ConversationTrigger");
     }
 }

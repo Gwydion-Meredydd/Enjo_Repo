@@ -81,8 +81,10 @@ public class PickUpDetection : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && Door == false)
         {
-            other.SendMessage(EnterMessageToSend);
-
+            if (NPC == false)
+            {
+                other.SendMessage(EnterMessageToSend);
+            }
             if (Coin == false && Destory == true)
             {
                 Destroy(gameObject);
@@ -143,12 +145,14 @@ public class PickUpDetection : MonoBehaviour
                 }
             }
         }
-        if (NPC == true && Guard == false && NPCQuest == false) 
+        if (NPC == true && Guard == false && NPCQuest == false)
         {
-            InteractText.text = "";
-            gameObject.SendMessage("PlayerExit");
+            if (HasSpoken == false)
+            {
+                gameObject.SendMessage("PlayerExit");
+            }
         }
-
+        InteractText.text = "";
     }
     IEnumerator Teleport()
     {

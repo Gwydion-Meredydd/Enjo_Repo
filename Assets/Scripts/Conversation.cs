@@ -9,7 +9,7 @@ public class Conversation : MonoBehaviour
 
     private void Start()
     {
-        voiceSound.GetComponent<AudioSource>();
+
     }
     public void ConversationTrigger() 
     {
