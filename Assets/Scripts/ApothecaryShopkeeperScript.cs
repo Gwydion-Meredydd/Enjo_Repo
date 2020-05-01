@@ -8,6 +8,7 @@ public class ApothecaryShopkeeperScript : MonoBehaviour
     public Text PopUpText;
     public GameObject ShopUI;
     public GameObject Player;
+    public GameObject QuestController;
     public bool InCollider = false;
     public bool InMenu = false;
 
@@ -37,6 +38,7 @@ public class ApothecaryShopkeeperScript : MonoBehaviour
                 if (InMenu == false)
                 {
                     ShopUI.SetActive(true);
+                    QuestController.SendMessage("GetCoinAmmount");
                     Player.SendMessage("CantMove");
                     InMenu = true;
                 }
@@ -56,5 +58,11 @@ public class ApothecaryShopkeeperScript : MonoBehaviour
             PopUpText.text = "";
             InCollider = false;
         }
+    }
+    public void MarchantUIOff() 
+    {
+        InMenu = false;
+        Player.SendMessage("CanMove");
+        ShopUI.SetActive(false);
     }
 }

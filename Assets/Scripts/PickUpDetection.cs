@@ -164,8 +164,5 @@ public class PickUpDetection : MonoBehaviour
         Player.transform.position = TeleportLocation.transform.position;
         Player.GetComponent<CharacterController>().enabled = true;
     }
-
-    
-
     
 }

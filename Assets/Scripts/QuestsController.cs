@@ -99,6 +99,11 @@ public class QuestsController : MonoBehaviour
             QuestCompleted();
         }
     }
+    public void CoinRecall(int NewCointAmmount) 
+    {
+        CoinAmmount = NewCointAmmount;
+        CoinAmmountText.text = "$ " + CoinAmmount.ToString();
+    }
     public void GetCoinAmmount() 
     {
         MerchantController.SendMessage("CoinReciver", CoinAmmount);

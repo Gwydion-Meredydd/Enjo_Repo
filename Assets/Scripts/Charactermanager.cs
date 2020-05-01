@@ -200,6 +200,7 @@ public class Charactermanager : MonoBehaviour
         {
             Time.timeScale = 1f;
             PotionsUI.SetActive(false);
+            Potion = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -268,42 +269,42 @@ public class Charactermanager : MonoBehaviour
                 Potion_Ammount = PotionAmmountSave.HealthPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Health Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(0)].text = ("Health Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 2:
                 Potion_Ammount = PotionAmmountSave.ManaPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Mana Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(1)].text = ("Mana Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 3:
                 Potion_Ammount = PotionAmmountSave.ShieldPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Shield Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(2)].text = ("Shield Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 4:
                 Potion_Ammount = PotionAmmountSave.JumpPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Jump Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(3)].text = ("Jump Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 5:
                 Potion_Ammount = PotionAmmountSave.SpeeedPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Speed Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(4)].text = ("Speed Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 6:
                 Potion_Ammount = PotionAmmountSave.StrengthPotion;
                 if (Potion_Ammount > 0)
                 {
-                    Potion_AmmountText[(PotionValue)].text = ("Strength Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[(5)].text = ("Strength Potion " + Potion_Ammount.ToString());
                 }
                 break;
         }
@@ -326,7 +327,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Health Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[0].text = ("Health Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 2:
@@ -334,7 +335,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Mana Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[1].text = ("Mana Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 3:
@@ -342,7 +343,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Shield Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[2].text = ("Shield Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 4:
@@ -350,7 +351,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Jump Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[3].text = ("Jump Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 5:
@@ -358,7 +359,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Speed Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[4].text = ("Speed Potion " + Potion_Ammount.ToString());
                 }
                 break;
             case 6:
@@ -366,7 +367,7 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     CharacterAnimator.SetBool("Potion", true);
-                    Potion_AmmountText[(Potion_Value - 1)].text = ("Strength Potion " + Potion_Ammount.ToString());
+                    Potion_AmmountText[5].text = ("Strength Potion " + Potion_Ammount.ToString());
                 }
                 break;
         }
@@ -382,8 +383,7 @@ public class Charactermanager : MonoBehaviour
         Cursor.visible = false;
         PotionAmmount(PotionValue);
         switch (PotionValue)
-        {
-            
+        {   
             case 1:
                 if (Health < 100)
                 {
@@ -391,6 +391,8 @@ public class Charactermanager : MonoBehaviour
                     {
                         Health = 100;
                         HealthBar.value = Health;
+                        StartCoroutine(PotionTiming());
+                        SetPotionAmmount(PotionValue);
                     }
                 }
                 break;
@@ -401,6 +403,8 @@ public class Charactermanager : MonoBehaviour
                     {
                         Mana = 100;
                         ManaBar.value = Mana;
+                        StartCoroutine(PotionTiming());
+                        SetPotionAmmount(PotionValue);
                     }
                 }
                 break;
@@ -411,6 +415,8 @@ public class Charactermanager : MonoBehaviour
                     {
                         Shield = 100;
                         ShieldBar.value = Shield;
+                        StartCoroutine(PotionTiming());
+                        SetPotionAmmount(PotionValue);
                     }
                 }
                 break;
@@ -418,25 +424,27 @@ public class Charactermanager : MonoBehaviour
                 if (Potion_Ammount > 0)
                 {
                     StartCoroutine(JumpBoost());
+                    StartCoroutine(PotionTiming());
+                    SetPotionAmmount(PotionValue);
                 }
                 break;
             case 5:
                 if (Potion_Ammount > 0)
                 {
                     StartCoroutine(SpeedBoost());
+                    StartCoroutine(PotionTiming());
+                    SetPotionAmmount(PotionValue);
                 }
                 break;
             case 6:
                 if (Potion_Ammount > 0)
                 {
                     StartCoroutine(StrengthBoost());
+                    StartCoroutine(PotionTiming());
+                    SetPotionAmmount(PotionValue);
                 }
                 break;
-
         }
-        Potion_Ammount = Potion_Ammount - 1;
-        SetPotionAmmount(PotionValue);
-        StartCoroutine(PotionTiming());
     }
     public void CanGrab()
     {
