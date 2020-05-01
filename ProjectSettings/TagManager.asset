@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Coin
+  - WonderingVillager
   layers:
   - Default
   - TransparentFX

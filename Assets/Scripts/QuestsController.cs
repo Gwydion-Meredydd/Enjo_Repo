@@ -16,14 +16,16 @@ public class QuestsController : MonoBehaviour
     public GameObject[] Guard;
     public GameObject[] VCams;
     public GameObject[] StartingCoins;
+    public GameObject[] Villagers;
     public GameObject MerchantController;
     public GameObject[] ScareCrowText; 
-    public int GrabAmmount;
+    public int GrabAmmount, VillagerSpokenAmmount;
     public int CoinAmmount;
     public int ScareCrowValue;
     public Text CoinAmmountText;
     public void QuestCompleted()
     {
+        Villagers = GameObject.FindGameObjectsWithTag("WonderingVillager");
         QuestNumber++;
         StartCoroutine(QuestTextTiming());
 
@@ -97,6 +99,18 @@ public class QuestsController : MonoBehaviour
         if (GrabAmmount == 3)
         {
             QuestCompleted();
+        }
+    }
+    public void VillagerSpeakingAmmount() 
+    {
+        VillagerSpokenAmmount++;
+        if (VillagerSpokenAmmount >= 3) 
+        {
+            for (int i = 0; i < Villagers.Length; i++)
+            {
+                Villagers[i].SendMessage("ThreeVillagersSpoken");
+                Debug.Log("3HASPSOEKN");
+            }
         }
     }
     public void CoinRecall(int NewCointAmmount) 

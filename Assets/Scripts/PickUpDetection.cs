@@ -8,7 +8,7 @@ public class PickUpDetection : MonoBehaviour
     public string EnterMessageToSend;
     public string ExitMessageToSend;
     public bool Destory;
-    public bool NPC;
+    public bool NPC, WonderingVillager;
     public bool HasSpoken;
     public bool Door;
     public bool TeleportCheck;
@@ -17,7 +17,7 @@ public class PickUpDetection : MonoBehaviour
     public bool SendExitMessage;
     public bool Coin;
     public bool Guard;
-    public bool NPCQuest;
+    public bool NPCQuest,WonderingVillagerQuest;
     public Text InteractText;
     public GameObject Player;
     public GameObject QuestManager;
@@ -66,13 +66,17 @@ public class PickUpDetection : MonoBehaviour
                 InteractText.text = "";
                 HasSpoken = true;
                 Debug.Log("HEY");
-                if (NPCQuest == false)
+                if (NPCQuest == false && WonderingVillager == false)
                 {
                     QuestManager.SendMessage("VillagerSpoken");
                 }
                 gameObject.SendMessage(EnterMessageToSend);
                 HasSpoken = true;
                 Player.SendMessage("CantMove");
+                if (WonderingVillagerQuest == true)
+                {
+                    QuestManager.SendMessage("VillagerSpeakingAmmount");
+                }
             }
         }
     }
@@ -147,12 +151,13 @@ public class PickUpDetection : MonoBehaviour
         }
         if (NPC == true && Guard == false && NPCQuest == false)
         {
-            if (HasSpoken == false)
-            {
-                gameObject.SendMessage("PlayerExit");
-            }
+            gameObject.SendMessage("PlayerExit");
         }
         InteractText.text = "";
+    }
+    public void ThreeVillagersSpoken() 
+    {
+        WonderingVillagerQuest = false;
     }
     IEnumerator Teleport()
     {
