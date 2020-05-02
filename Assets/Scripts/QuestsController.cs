@@ -18,17 +18,20 @@ public class QuestsController : MonoBehaviour
     public GameObject[] StartingCoins;
     public GameObject[] Villagers;
     public GameObject MerchantController;
-    public GameObject[] ScareCrowText; 
+    public GameObject[] ScareCrowText;
+    public GameObject UIOveralay;
     public int GrabAmmount, VillagerSpokenAmmount;
     public int CoinAmmount;
     public int ScareCrowValue;
     public Text CoinAmmountText;
-    public void QuestCompleted()
+    void Start()
     {
         Villagers = GameObject.FindGameObjectsWithTag("WonderingVillager");
+    }
+    public void QuestCompleted()
+    {
         QuestNumber++;
         StartCoroutine(QuestTextTiming());
-
     }
     IEnumerator QuestTextTiming()
     {
@@ -80,6 +83,18 @@ public class QuestsController : MonoBehaviour
                 ScareCrowText[5].SetActive(false);
                 Objective.text = "Speek to 3 villagers";
                 break;
+            case 6:
+                QuestText.SetBool("Complete", true);
+                Border[5].SetActive(false);
+                Objective.text = "Vist the Apothecon Shopkeeper";
+                break;
+            case 7:
+                Objective.text = "Buy a Health Potion";
+                break;
+            case 8:
+                Objective.text = "";
+                UIOveralay.SetActive(false);
+                break;
         }
     }
 
@@ -106,6 +121,7 @@ public class QuestsController : MonoBehaviour
         VillagerSpokenAmmount++;
         if (VillagerSpokenAmmount >= 3) 
         {
+            QuestCompleted();
             for (int i = 0; i < Villagers.Length; i++)
             {
                 Villagers[i].SendMessage("ThreeVillagersSpoken");

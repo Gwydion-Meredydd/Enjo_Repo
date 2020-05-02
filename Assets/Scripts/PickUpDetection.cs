@@ -17,6 +17,7 @@ public class PickUpDetection : MonoBehaviour
     public bool SendExitMessage;
     public bool Coin;
     public bool Guard;
+    public bool HasPassed;
     public bool NPCQuest,WonderingVillagerQuest;
     public Text InteractText;
     public GameObject Player;
@@ -161,6 +162,11 @@ public class PickUpDetection : MonoBehaviour
     }
     IEnumerator Teleport()
     {
+        if (HasPassed == true) 
+        {
+            HasPassed = false;
+            QuestManager.SendMessage("QuestCompleted");
+        }
         Player.SendMessage(EnterMessageToSend);
         yield return new WaitForSeconds(0.5f);
         Player.SendMessage(EnterMessageToSend);

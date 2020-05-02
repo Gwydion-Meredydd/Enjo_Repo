@@ -59,7 +59,7 @@ public class ApothecaryShopkeeperScript : MonoBehaviour
             InCollider = false;
         }
     }
-    public void MarchantUIOff() 
+    public void MarchantUIOfff() 
     {
         InMenu = false;
         Player.SendMessage("CanMove");
