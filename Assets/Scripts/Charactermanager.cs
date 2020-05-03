@@ -26,9 +26,9 @@ public class Charactermanager : MonoBehaviour
     [Range(0.001f, 1f)]
     [SerializeField] float RotationSpeed = 0.3f;
     [SerializeField] float AllowRotation = 0.1f;
-    [SerializeField] float movementSpeed = 4f;
-    [SerializeField] float SprintSpeed = 3f;
-    [SerializeField] float JumpSpeed = 5f;
+    [SerializeField] float movementSpeed = 8f;
+    [SerializeField] float SprintSpeed = 16f;
+    [SerializeField] float JumpSpeed = 0.6f;
     [SerializeField] float gravity;
     [SerializeField] bool MoveOveride, Moving, CanSprint = true;
     public GameObject ShopLocationsEnter;

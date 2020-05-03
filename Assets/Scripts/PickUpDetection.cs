@@ -41,18 +41,10 @@ public class PickUpDetection : MonoBehaviour
                 if (Input.GetButtonDown("Interact") && Destory == true && Coin == true)
                 {
                     coinSound.Play();
-                    
+
                     Destroy(gameObject);
-                    
+
                 }
-            }
-        }
-        if (Door == true && TeleportCheck == false)
-        {
-            TeleportCheck = true;
-            if (other.gameObject.tag == "Player")
-            {
-                StartCoroutine(Teleport());
             }
         }
         if (NPC == true && Guard == false && HasSpoken == false) 
@@ -90,6 +82,14 @@ public class PickUpDetection : MonoBehaviour
         }
         else
         {
+            if (Door == true && TeleportCheck == false && other.gameObject.tag == "Player")
+            {
+                TeleportCheck = true;
+                if (other.gameObject.tag == "Player")
+                {
+                    StartCoroutine(Teleport());
+                }
+            }
 
             if (other.gameObject.tag == "Player" && Door == false)
             {
