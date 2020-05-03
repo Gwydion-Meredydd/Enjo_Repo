@@ -18,7 +18,7 @@ public class PickUpDetection : MonoBehaviour
     public bool Coin;
     public bool Guard;
     public bool HasPassed;
-    public bool NPCQuest,WonderingVillagerQuest;
+    public bool NPCQuest,WonderingVillagerQuest,QuestOnly;
     public Text InteractText;
     public GameObject Player;
     public GameObject QuestManager;
@@ -83,41 +83,49 @@ public class PickUpDetection : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.tag == "Player" && Door == false)
+        if (QuestOnly == true)
         {
-            if (NPC == false)
-            {
-                other.SendMessage(EnterMessageToSend);
-            }
-            if (Coin == false && Destory == true)
-            {
-                Destroy(gameObject);
-            }
-
-
+            QuestManager.SendMessage("QuestCompleted");
+            Destroy(gameObject);
         }
-        if (NPC == true && HasSpoken == false)
+        else
         {
-            if (other.gameObject.tag == "Player")
-            {
-                if (Guard == true)
-                {
 
-                    gameObject.SendMessage(EnterMessageToSend);
-                    HasSpoken = true;
-                    Player.SendMessage("CantMove");
-                }
-                else 
+            if (other.gameObject.tag == "Player" && Door == false)
+            {
+                if (NPC == false)
                 {
-                    InteractText.text = "Press E to interact";
-                    if (Input.GetButtonDown("Interact"))
+                    other.SendMessage(EnterMessageToSend);
+                }
+                if (Coin == false && Destory == true)
+                {
+                    Destroy(gameObject);
+                }
+
+
+            }
+            if (NPC == true && HasSpoken == false)
+            {
+                if (other.gameObject.tag == "Player")
+                {
+                    if (Guard == true)
                     {
-                        Debug.Log("HEY");
-                        QuestManager.SendMessage("VillagerSpoken");
+
                         gameObject.SendMessage(EnterMessageToSend);
                         HasSpoken = true;
                         Player.SendMessage("CantMove");
+                    }
+                    else
+                    {
+                        InteractText.text = "Press E to interact";
+                        if (Input.GetButtonDown("Interact"))
+                        {
+                            Debug.Log("HEY");
+                            QuestManager.SendMessage("VillagerSpoken");
+                            gameObject.SendMessage(EnterMessageToSend);
+                            HasSpoken = true;
+                            Player.SendMessage("CantMove");
+                        }
                     }
                 }
             }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MerchantManager : MonoBehaviour
 {
     public int Coin_Ammount;
+    public bool HasBoughtPotion;
     public Text CoinAmmountText;
     public GameObject QuestManager;
     public GameObject ApothogoneShopkeeper;
@@ -17,6 +18,11 @@ public class MerchantManager : MonoBehaviour
         QuestManager.SendMessage("GetCoinAmmount");
         if (Coin_Ammount >= 60)
         {
+            if (HasBoughtPotion == false) 
+            {
+                QuestManager.SendMessage("QuestCompleted");
+                HasBoughtPotion = true;
+            }
             CharacterRefrence.PotionAmmountSave.HealthPotion = CharacterRefrence.PotionAmmountSave.HealthPotion + 1;
             Coin_Ammount = Coin_Ammount - 60;
             PotionAmmountText[0].text = "Health Potion " + CharacterRefrence.PotionAmmountSave.HealthPotion.ToString();

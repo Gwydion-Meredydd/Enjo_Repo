@@ -92,8 +92,24 @@ public class QuestsController : MonoBehaviour
                 Objective.text = "Buy a Health Potion";
                 break;
             case 8:
-                Objective.text = "";
+                Objective.text = "Leave the Market";
                 UIOveralay.SetActive(false);
+                Guard[2].SetActive(true);
+                Guard[1].SetActive(false);
+                Border[8].SetActive(true);
+                break;
+            case 9:
+                Objective.text = "Talk to Old Man Iro";
+                VCams[0].SetActive(false);
+                VCams[3].SetActive(true);
+                Border[6].SetActive(false);
+                Border[7].SetActive(true);
+                yield return new WaitForSeconds(2);
+                VCams[0].SetActive(true);
+                VCams[3].SetActive(false);
+                break;
+            case 10:
+
                 break;
         }
     }
