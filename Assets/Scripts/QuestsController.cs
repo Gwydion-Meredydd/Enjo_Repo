@@ -17,6 +17,7 @@ public class QuestsController : MonoBehaviour
     public GameObject[] VCams;
     public GameObject[] StartingCoins;
     public GameObject[] Villagers;
+    public GameObject[] Enemies;
     public GameObject MerchantController;
     public GameObject[] ScareCrowText;
     public GameObject UIOveralay;
@@ -48,12 +49,14 @@ public class QuestsController : MonoBehaviour
                 QuestText.SetBool("Complete", true);
                 yield return new WaitForSeconds(2.2f);
                 QuestText.SetBool("Complete", false);
+                Player.SendMessage("CantMove");
                 Border[0].SetActive(false);
                 Border[1].SetActive(true);
                 VCams[0].SetActive(false);
                 VCams[1].SetActive(false);
                 VCams[2].SetActive(true);
                 yield return new WaitForSeconds(2);
+                Player.SendMessage("CanMove");
                 VCams[2].SetActive(false);
                 VCams[0].SetActive(true);
                 Border[1].SetActive(false);
@@ -102,14 +105,48 @@ public class QuestsController : MonoBehaviour
                 Objective.text = "Talk to Old Man Iro";
                 VCams[0].SetActive(false);
                 VCams[3].SetActive(true);
+                Player.SendMessage("CantMove");
                 Border[6].SetActive(false);
                 Border[7].SetActive(true);
                 yield return new WaitForSeconds(2);
                 VCams[0].SetActive(true);
+                Player.SendMessage("CanMove");
                 VCams[3].SetActive(false);
                 break;
             case 10:
-
+                Objective.text = "Retrieve the Spirit Sword";
+                Border[9].SetActive(false);
+                Border[10].SetActive(true);
+                Player.SendMessage("CantMove");
+                VCams[4].SetActive(true);
+                VCams[0].SetActive(false);
+                yield return new WaitForSeconds(7);
+                VCams[4].SetActive(false);
+                VCams[0].SetActive(true);
+                Player.SendMessage("CanMove");
+                break;
+            case 11:
+                Objective.text = "Return to Old Man Iro";
+                Border[11].SetActive(true);
+                break;
+            case 12:
+                Objective.text = "Defete the shade klan soldiers";
+                Border[12].SetActive(true);
+                Border[11].SetActive(false);
+                Enemies[0].SetActive(true);
+                Enemies[1].SetActive(true);
+                break;
+            case 13:
+                Objective.text = "Tell your father about the Soldiers";
+                break;
+            case 14:
+                Objective.text = "";
+                break;
+            case 15:
+                Objective.text = "Pick up your items";
+                break;
+            case 16:
+                Objective.text = "Cross the Hydris Klan Bridge";
                 break;
         }
     }

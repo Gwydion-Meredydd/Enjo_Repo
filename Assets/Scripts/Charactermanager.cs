@@ -44,11 +44,12 @@ public class Charactermanager : MonoBehaviour
     public float Shield;
     public float Mana;
     public int HitMultiplier;
-    public GameObject Bottle;
-    public bool Potion;
+    public GameObject Bottle,SwordObject;
+    public bool Potion, Sword,Dead;
     public int Potion_Ammount;
     public Text[] Potion_AmmountText;
     public Slider HealthBar, ManaBar, ShieldBar;
+    public Transform DeathResetPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +90,11 @@ public class Charactermanager : MonoBehaviour
         {
             InputDecider();
             MovementManger();
+        }
+        if (Health <= 0 & Dead == false) 
+        {
+            Dead = true;
+            StartCoroutine(Death());
         }
     }
     void InputDecider()
@@ -259,7 +265,14 @@ public class Charactermanager : MonoBehaviour
     {
         CanJump = false;
         CharacterAnimator.SetBool("Jump", false);
+        CharacterAnimator.SetBool("PreJump", false);
         gravity = 0;
+    }
+    public void SwordPickedUp() 
+    {
+        Sword = true;
+        SwordObject.SetActive(true);
+        CharacterAnimator.SetBool("Sword", true);
     }
    
     public void PotionTextUpdate() 
@@ -385,12 +398,17 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetFloat("X_Input", 0);
         CharacterAnimator.SetFloat("Y_Input", 0);
     }
+    public void DamageDelt() 
+    {
+        Health = Health - 10;
+        HealthBar.value = Health;
+        StartCoroutine(Hit());
+    }
     public void ApothecaryShop()
     {
         if (ShopTeleporting == false)
         {
             ShopTeleporting = true;
-            TransitionController.SetBool("CircleTransition", true);
             StartCoroutine(ApothecaryShopTiming());
             ShopTeleporting = false;
         }
@@ -409,10 +427,12 @@ public class Charactermanager : MonoBehaviour
         {
             HitAmmount = (100 * HitMultiplier);
             HitObject.SendMessage("Damage", HitAmmount);
+            Debug.Log(HitObject);
         }
     }
     IEnumerator ApothecaryShopTiming()
     {
+        TransitionController.SetBool("CircleTransition", true);
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
     }
@@ -428,6 +448,19 @@ public class Charactermanager : MonoBehaviour
         StartCoroutine(CelebrationTiming());
 
     }
+    IEnumerator Death()
+    {
+        TransitionController.SetBool("CircleTransition", true);
+        yield return new WaitForSeconds(1f);
+        gameObject.GetComponent<CharacterController>().enabled = false;
+        transform.position = DeathResetPoint.position;
+        gameObject.GetComponent<CharacterController>().enabled = true;
+        yield return new WaitForSeconds(1f);
+        TransitionController.SetBool("CircleTransition", false);
+        Health = 100;
+        HealthBar.value = Health;
+        Dead = false;
+    }
     IEnumerator ShopExit()
     {
         Debug.Log("Exit");
@@ -442,11 +475,18 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetBool("Celebrate", false);
         MoveOveride = false;
     }
+    IEnumerator Hit()
+    {
+        CharacterAnimator.SetBool("Hit", true);
+        yield return new WaitForSeconds(0.5f);
+        CharacterAnimator.SetBool("Hit", false);
+    }
     void JumpOff()
     {
         if (gravity < 0)
         {
             gravity = 0;
+
         }
     }
     IEnumerator TextPickupTimer()

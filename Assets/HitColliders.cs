@@ -29,10 +29,19 @@ public class HitColliders : MonoBehaviour
                 }
             }
         }
-        if (Sword == true)
+        else if (Sword == true)
         {
+            
             CollisionHit = other.gameObject;
             Player_.SendMessage("SwordHit", CollisionHit);
+            if (CollisionHit.tag == "Enemy")
+            {
+                if (Input.GetButton("Fire1"))
+                {
+                    Debug.Log("apgnapignapgnapng");
+                    FistHitFireSystem.Play();
+                }
+            }
         }
     }
        
