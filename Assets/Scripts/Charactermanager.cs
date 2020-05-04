@@ -377,6 +377,21 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(TextPickupTimer());
         }
     }
+    public void CanGrabMap()
+    {
+        PickupText.text = "Press 'E' to pickup item!";
+        if (Input.GetButtonDown("Interact") && isPickingUp == false)
+        {
+            MoveOveride = true;
+            isPickingUp = true;
+            PickupText.text = "You Collected Papers";
+            CharacterAnimator.SetBool("Grab", true);
+            CharacterAnimator.SetBool("Run", false);
+            CharacterAnimator.SetBool("Jump", false);
+            QuestManger.SendMessage("QuestCompleted");
+            StartCoroutine(TextPickupTimer());
+        }
+    }
     public void QuestReached()
     {
         QuestManger.SendMessage("QuestCompleted");
@@ -398,11 +413,22 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetFloat("X_Input", 0);
         CharacterAnimator.SetFloat("Y_Input", 0);
     }
-    public void DamageDelt() 
+    public void DamageDelt()
     {
-        Health = Health - 10;
-        HealthBar.value = Health;
-        StartCoroutine(Hit());
+        if (Shield == 0)
+        {
+            Health = Health - 15;
+            HealthBar.value = Health;
+            StartCoroutine(Hit());
+        }
+        else 
+        {
+            Shield = Shield - 20;
+            ShieldBar.value = Shield;
+            Health = Health -5;
+            HealthBar.value = Health;
+            StartCoroutine(Hit());
+        }
     }
     public void ApothecaryShop()
     {
@@ -459,6 +485,8 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", false);
         Health = 100;
         HealthBar.value = Health;
+        Shield = 100;
+        ShieldBar.value = Shield;
         Dead = false;
     }
     IEnumerator ShopExit()

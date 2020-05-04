@@ -8,6 +8,7 @@ public class QuestsController : MonoBehaviour
 {
     public int QuestNumber;
     public GameObject Player;
+    public Charactermanager PlayerRefrence;
     public int[] Potions;
 
     public Animator QuestText;
@@ -20,10 +21,13 @@ public class QuestsController : MonoBehaviour
     public GameObject[] Enemies;
     public GameObject MerchantController;
     public GameObject[] ScareCrowText;
+    public GameObject[] OldManIro;
+    public GameObject EnjosFather;
     public GameObject UIOveralay;
     public int GrabAmmount, VillagerSpokenAmmount;
     public int CoinAmmount;
     public int ScareCrowValue;
+    public int EnemyCount;
     public Text CoinAmmountText;
     void Start()
     {
@@ -95,6 +99,7 @@ public class QuestsController : MonoBehaviour
                 Objective.text = "Buy a Health Potion";
                 break;
             case 8:
+                EnjosFather.SetActive(true);
                 Objective.text = "Leave the Market";
                 UIOveralay.SetActive(false);
                 Guard[2].SetActive(true);
@@ -102,7 +107,8 @@ public class QuestsController : MonoBehaviour
                 Border[8].SetActive(true);
                 break;
             case 9:
-                Objective.text = "Talk to Old Man Iro";
+                Objective.text = "Talk to Enjos father";
+                QuestText.SetBool("Complete", true);
                 VCams[0].SetActive(false);
                 VCams[3].SetActive(true);
                 Player.SendMessage("CantMove");
@@ -112,41 +118,63 @@ public class QuestsController : MonoBehaviour
                 VCams[0].SetActive(true);
                 Player.SendMessage("CanMove");
                 VCams[3].SetActive(false);
+                QuestText.SetBool("Complete", false);
+                QuestText.SetBool("Complete", false);
+                QuestText.SetBool("Complete", true);
+                yield return new WaitForSeconds(2);
+                QuestText.SetBool("Complete", false);
                 break;
             case 10:
+                Objective.text = "Talk to Old Man Iro";
+                PlayerRefrence.PotionAmmountSave.HealthPotion = PlayerRefrence.PotionAmmountSave.HealthPotion - 1;
+                PlayerRefrence.Potion_AmmountText[0].text = "Health Potion " + PlayerRefrence.PotionAmmountSave.HealthPotion;
+                QuestText.SetBool("Complete", false);
+                QuestText.SetBool("Complete", true);
+                yield return new WaitForSeconds(2);
+                QuestText.SetBool("Complete", false);
+                break;
+            case 11:
                 Objective.text = "Retrieve the Spirit Sword";
                 Border[9].SetActive(false);
                 Border[10].SetActive(true);
                 Player.SendMessage("CantMove");
                 VCams[4].SetActive(true);
                 VCams[0].SetActive(false);
+                EnjosFather.SetActive(false);
                 yield return new WaitForSeconds(7);
                 VCams[4].SetActive(false);
                 VCams[0].SetActive(true);
                 Player.SendMessage("CanMove");
                 break;
-            case 11:
+            case 12:
                 Objective.text = "Return to Old Man Iro";
                 Border[11].SetActive(true);
                 break;
-            case 12:
+            case 13:
                 Objective.text = "Defete the shade klan soldiers";
                 Border[12].SetActive(true);
                 Border[11].SetActive(false);
                 Enemies[0].SetActive(true);
                 Enemies[1].SetActive(true);
                 break;
-            case 13:
-                Objective.text = "Tell your father about the Soldiers";
-                break;
             case 14:
-                Objective.text = "";
+                Objective.text = "Tell your father about the Soldiers";
+                OldManIro[0].SetActive(false);
+                OldManIro[1].SetActive(true);
                 break;
             case 15:
-                Objective.text = "Pick up your items";
+                Objective.text = "Pick up the map from the notice board";
+                Border[13].SetActive(true);
                 break;
             case 16:
                 Objective.text = "Cross the Hydris Klan Bridge";
+                Border[14].SetActive(false);
+                Border[15].SetActive(true);
+                VCams[0].SetActive(false);
+                VCams[5].SetActive(true);
+                yield return new WaitForSeconds(7);
+                VCams[5].SetActive(false);
+                VCams[0].SetActive(true);
                 break;
         }
     }
@@ -181,6 +209,14 @@ public class QuestsController : MonoBehaviour
                 Debug.Log("3HASPSOEKN");
             }
         }
+    }
+    public void EnemyKilled() 
+    {
+        EnemyCount = EnemyCount + 1;
+        if (EnemyCount  == 2) 
+        {
+            QuestCompleted();
+        }   
     }
     public void CoinRecall(int NewCointAmmount) 
     {

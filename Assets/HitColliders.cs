@@ -7,6 +7,7 @@ public class HitColliders : MonoBehaviour
     public GameObject Player_;
     public GameObject CollisionHit;
     public ParticleSystem FistHitFireSystem;
+    public Charactermanager PlayerRefrence;
     public bool Fist;
     public bool Sword;
     void OnTriggerEnter(Collider other)
@@ -24,8 +25,11 @@ public class HitColliders : MonoBehaviour
             {
                 if (Input.GetButton("Fire1"))
                 {
-                    Debug.Log("GUARDHIT");
-                    FistHitFireSystem.Play();
+                    if (PlayerRefrence.Mana > 0)
+                    {
+                        Debug.Log("GUARDHIT");
+                        FistHitFireSystem.Play();
+                    }
                 }
             }
         }
@@ -38,8 +42,11 @@ public class HitColliders : MonoBehaviour
             {
                 if (Input.GetButton("Fire1"))
                 {
-                    Debug.Log("apgnapignapgnapng");
-                    FistHitFireSystem.Play();
+                    if (PlayerRefrence.Mana > 0)
+                    {
+                        Debug.Log("apgnapignapgnapng");
+                        FistHitFireSystem.Play();
+                    }
                 }
             }
         }

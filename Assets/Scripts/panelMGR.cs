@@ -23,6 +23,7 @@ public class panelMGR : MonoBehaviour
     public GameObject boardTwelve;
     public GameObject TitleScreen;
     public Animator[] fadeAnim;
+    public Animator MusicAnimator;
 
     void Start()
     {
@@ -163,6 +164,7 @@ public class panelMGR : MonoBehaviour
     }
     IEnumerator TitleTiming()
     {
+        MusicAnimator.SetBool("End", true);
         yield return new WaitForSeconds(14.5f);
         SceneManager.LoadScene(3);
     }

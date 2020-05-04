@@ -15,6 +15,7 @@ public class EnemyDamage : MonoBehaviour
     public bool Burn;
     public bool Hited;
     public bool IsAttacking;
+    public bool Dead;
     public ParticleSystem Fire;
     public GameObject[] ObjectsToDestory;
     public MeshRenderer ScareCrowMesh;
@@ -52,6 +53,8 @@ public class EnemyDamage : MonoBehaviour
             }
             else
             {
+                IsAttacking = false;
+                Hited = false;
                 Agent.isStopped = false;
                 EnemeyAnimator.SetBool("Attack", false);
                 EnemeyAnimator.SetBool("Walk", true);
@@ -75,6 +78,11 @@ public class EnemyDamage : MonoBehaviour
             {
                 EnemeyAnimator.SetBool("Dead", true);
                 Agent.isStopped = true;
+                if (Dead == false) 
+                {
+                    Dead = true;
+                    QuestManager.SendMessage("EnemyKilled");
+                }
             }
             else
             {
