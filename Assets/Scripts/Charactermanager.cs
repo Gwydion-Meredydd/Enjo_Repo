@@ -50,6 +50,7 @@ public class Charactermanager : MonoBehaviour
     public Text[] Potion_AmmountText;
     public Slider HealthBar, ManaBar, ShieldBar;
     public Transform DeathResetPoint;
+    public EnemyDamage[] EnemieSoliders;
     // Start is called before the first frame update
     void Start()
     {
@@ -483,6 +484,8 @@ public class Charactermanager : MonoBehaviour
         gameObject.GetComponent<CharacterController>().enabled = true;
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
+        EnemieSoliders[0].Health = 800;
+        EnemieSoliders[1].Health = 800;
         Health = 100;
         HealthBar.value = Health;
         Shield = 100;
