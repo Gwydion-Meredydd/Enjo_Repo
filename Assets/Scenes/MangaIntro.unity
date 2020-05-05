@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 23748330}
   textEnable: {fileID: 320391527}
   fadeAnim: {fileID: 23748335}
@@ -448,6 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 151345412}
   textEnable: {fileID: 1336386254}
   fadeAnim: {fileID: 151345417}
@@ -754,6 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 1
   textDisable: {fileID: 320391527}
   textEnable: {fileID: 0}
   fadeAnim: {fileID: 320391532}
@@ -949,6 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 481462574}
   textEnable: {fileID: 1618316389}
   fadeAnim: {fileID: 481462579}
@@ -1202,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 592563112}
   textEnable: {fileID: 1673062245}
   fadeAnim: {fileID: 592563117}
@@ -1275,6 +1280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 635620830}
   textEnable: {fileID: 2127675835}
   fadeAnim: {fileID: 635620835}
@@ -2157,6 +2163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 1325899241}
   textEnable: {fileID: 481462574}
   fadeAnim: {fileID: 1325899246}
@@ -2273,6 +2280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 1326796757}
   textEnable: {fileID: 23748330}
   fadeAnim: {fileID: 1326796762}
@@ -2389,6 +2397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 1336386254}
   textEnable: {fileID: 1326796757}
   fadeAnim: {fileID: 1336386259}
@@ -2870,6 +2879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 1618316389}
   textEnable: {fileID: 635620830}
   fadeAnim: {fileID: 1618316394}
@@ -3069,6 +3079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 1673062245}
   textEnable: {fileID: 1325899241}
   fadeAnim: {fileID: 1673062250}
@@ -3626,6 +3637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6e718a58b2a04089778332aa7411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoNextText: 0
   textDisable: {fileID: 2127675835}
   textEnable: {fileID: 151345412}
   fadeAnim: {fileID: 2127675840}

@@ -7,6 +7,7 @@ public class PickUpDetection : MonoBehaviour
 {
     public string EnterMessageToSend;
     public string ExitMessageToSend;
+    public CharacterController PlayerCharacterController;
     public bool Destory;
     public bool NPC, WonderingVillager;
     public bool HasSpoken;
@@ -33,136 +34,145 @@ public class PickUpDetection : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (SendStayMessage == true && Door == false)
+        if (other.gameObject.name == "Enjo (1)")
         {
-            if (other.gameObject.tag == "Player")
+            if (SendStayMessage == true && Door == false)
             {
-                other.SendMessage(EnterMessageToSend);
-                if (Input.GetButtonDown("Interact") && Destory == true && Coin == true)
+                if (other.gameObject.name == "Enjo (1)")
                 {
-                    coinSound.Play();
+                    other.SendMessage(EnterMessageToSend);
+                    if (Input.GetButtonDown("Interact") && Destory == true && Coin == true)
+                    {
+                        coinSound.Play();
 
-                    Destroy(gameObject);
+                        Destroy(gameObject);
 
+                    }
                 }
             }
-        }
-        if (NPC == true && Guard == false && HasSpoken == false) 
-        {
-            if (NPCQuest == false)
+            if (NPC == true && Guard == false && HasSpoken == false)
             {
-                gameObject.SendMessage("PlayerEnter");
-            }
-            InteractText.text = "Press E to interact";
-            if (Input.GetButtonDown("Interact"))
-            {
-                InteractText.text = "";
-                HasSpoken = true;
-                Debug.Log("HEY");
-                if (NPCQuest == false && WonderingVillager == false)
+                if (NPCQuest == false)
                 {
-                    QuestManager.SendMessage("VillagerSpoken");
+                    gameObject.SendMessage("PlayerEnter");
                 }
-                gameObject.SendMessage(EnterMessageToSend);
-                HasSpoken = true;
-                Player.SendMessage("CantMove");
-                if (WonderingVillagerQuest == true)
+                InteractText.text = "Press E to interact";
+                if (Input.GetButtonDown("Interact"))
                 {
-                    QuestManager.SendMessage("VillagerSpeakingAmmount");
+                    InteractText.text = "";
+                    HasSpoken = true;
+                    Debug.Log("HEY");
+                    if (NPCQuest == false && WonderingVillager == false)
+                    {
+                        QuestManager.SendMessage("VillagerSpoken");
+                    }
+                    gameObject.SendMessage(EnterMessageToSend);
+                    HasSpoken = true;
+                    Player.SendMessage("CantMove");
+                    if (WonderingVillagerQuest == true)
+                    {
+                        QuestManager.SendMessage("VillagerSpeakingAmmount");
+                    }
                 }
             }
         }
     }
     void OnTriggerEnter(Collider other)
     {
-        if (QuestOnly == true)
+        if (other.gameObject.name == "Enjo (1)")
         {
-            QuestManager.SendMessage("QuestCompleted");
-            Destroy(gameObject);
-        }
-        else
-        {
-            if (Door == true && TeleportCheck == false && other.gameObject.tag == "Player")
+            if (QuestOnly == true)
             {
-                TeleportCheck = true;
-                if (other.gameObject.tag == "Player")
-                {
-                    StartCoroutine(Teleport());
-                }
+                QuestManager.SendMessage("QuestCompleted");
+                Destroy(gameObject);
             }
-
-            if (other.gameObject.tag == "Player" && Door == false)
+            else
             {
-                if (NPC == false)
+                if (Door == true && TeleportCheck == false && other.gameObject.name == "Enjo (1)")
                 {
-                    other.SendMessage(EnterMessageToSend);
-                }
-                if (Coin == false && Destory == true)
-                {
-                    Destroy(gameObject);
-                }
-
-
-            }
-            if (NPC == true && HasSpoken == false)
-            {
-                if (other.gameObject.tag == "Player")
-                {
-                    if (Guard == true)
+                    TeleportCheck = true;
+                    if (other.gameObject.name == "Enjo (1)")
                     {
-
-                        gameObject.SendMessage(EnterMessageToSend);
-                        HasSpoken = true;
-                        Player.SendMessage("CantMove");
+                        Debug.LogError("1a");
+                        StartCoroutine(Teleport());
                     }
-                    else
+                }
+
+                if (other.gameObject.tag == "Player" && Door == false)
+                {
+                    if (NPC == false)
                     {
-                        InteractText.text = "Press E to interact";
-                        if (Input.GetButtonDown("Interact"))
+                        other.SendMessage(EnterMessageToSend);
+                    }
+                    if (Coin == false && Destory == true)
+                    {
+                        Destroy(gameObject);
+                    }
+
+
+                }
+                if (NPC == true && HasSpoken == false)
+                {
+                    if (other.gameObject.tag == "Player")
+                    {
+                        if (Guard == true)
                         {
-                            Debug.Log("HEY");
-                            QuestManager.SendMessage("VillagerSpoken");
+
                             gameObject.SendMessage(EnterMessageToSend);
                             HasSpoken = true;
                             Player.SendMessage("CantMove");
+                        }
+                        else
+                        {
+                            InteractText.text = "Press E to interact";
+                            if (Input.GetButtonDown("Interact"))
+                            {
+                                Debug.Log("HEY");
+                                QuestManager.SendMessage("VillagerSpoken");
+                                gameObject.SendMessage(EnterMessageToSend);
+                                HasSpoken = true;
+                                Player.SendMessage("CantMove");
+                            }
                         }
                     }
                 }
             }
         }
-
     }
     void OnTriggerExit(Collider other)
     {
-        TeleportCheck = false;
-        if (SendExitMessage == true)
+        if (other.gameObject.name == "Enjo (1)")
         {
-            if (NPCQuest == false)
+            TeleportCheck = false;
+            if (SendExitMessage == true)
             {
-                if (other.gameObject.tag == "Player")
+                if (NPCQuest == false)
                 {
-                    other.SendMessage(ExitMessageToSend);
-                }
-            }
-            if (NPCQuest == true) 
-            {
-                if (HasSpoken == true) 
-                {
-                    if (other.gameObject.tag == "Player")
+                    if (other.gameObject.name == "Enjo (1)")
                     {
-                        QuestManager.SendMessage(ExitMessageToSend);
-                        Debug.Log("SendingExit");
-                        NPCQuest = false;
-                        SendExitMessage = false;
+                        other.SendMessage(ExitMessageToSend);
+                    }
+                }
+                if (NPCQuest == true)
+                {
+                    if (HasSpoken == true)
+                    {
+                        if (other.gameObject.name == "Enjo (1)")
+                        {
+                            QuestManager.SendMessage(ExitMessageToSend);
+                            Debug.Log("SendingExit");
+                            NPCQuest = false;
+                            SendExitMessage = false;
+                        }
                     }
                 }
             }
+            if (NPC == true && Guard == false && NPCQuest == false && WonderingVillager == true)
+            {
+                gameObject.SendMessage("PlayerExit");
+            }
+            InteractText.text = "";
         }
-        if (NPC == true && Guard == false && NPCQuest == false)
-        {
-            gameObject.SendMessage("PlayerExit");
-        }
-        InteractText.text = "";
     }
     public void ThreeVillagersSpoken() 
     {
@@ -170,18 +180,23 @@ public class PickUpDetection : MonoBehaviour
     }
     IEnumerator Teleport()
     {
-        if (HasPassed == true) 
+        Player.SendMessage("CantMove");
+        Debug.LogError("1");
+        Player.SendMessage("ApothecaryShop");
+        Debug.LogError("2");
+        yield return new WaitForSecondsRealtime(0.5f);
+        Debug.LogError("3");
+        PlayerCharacterController.enabled = false;
+        Debug.LogError("4");
+        Player.transform.position = TeleportLocation.transform.position;
+        Debug.LogError("5");
+        PlayerCharacterController.enabled = true;
+        Debug.LogError("6");
+        if (HasPassed == true)
         {
             HasPassed = false;
             QuestManager.SendMessage("QuestCompleted");
         }
-        Player.SendMessage(EnterMessageToSend);
-        yield return new WaitForSeconds(0.5f);
-        Player.SendMessage(EnterMessageToSend);
-        Player.GetComponent<CharacterController>().enabled = false;
-        //Player.transform.position = new Vector3(663f, -44.87f, 289);
-        Player.transform.position = TeleportLocation.transform.position;
-        Player.GetComponent<CharacterController>().enabled = true;
+        Player.SendMessage("CanMove");
     }
-    
 }

@@ -51,6 +51,7 @@ public class Charactermanager : MonoBehaviour
     public Slider HealthBar, ManaBar, ShieldBar;
     public Transform DeathResetPoint;
     public EnemyDamage[] EnemieSoliders;
+    public QuestsController QuestControllerScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -138,7 +139,7 @@ public class Charactermanager : MonoBehaviour
     }
     void MovementManger()
     {
-        gravity -= 2.5f * Time.deltaTime;
+        gravity -= 2.5f * Time.unscaledDeltaTime ;
         CharacterAnimator.SetFloat("X_Input", Speed);
         Vector3 moveDirection = DisiredMoveDirection * (movementSpeed * Time.deltaTime);
         moveDirection = new Vector3(moveDirection.x, gravity, moveDirection.z);
@@ -168,10 +169,10 @@ public class Charactermanager : MonoBehaviour
                     }
                 }
             }
-            else if (character_Controller.isGrounded)
-            {
-                JumpOff();
-            }
+        }
+        else if (character_Controller.isGrounded)
+        {
+            JumpOff();
         }
         if (Input.GetButtonDown("Jump") && character_Controller.isGrounded)
         {
@@ -234,7 +235,14 @@ public class Charactermanager : MonoBehaviour
         }
         if (Input.GetButton("Fire1"))
         {
-            Mana -= 0.25f;
+            if (Application.isEditor)
+            {
+                Mana -= 0.35f;
+            }
+            else 
+            {
+                Mana -= 0.05f;
+            }
             ManaBar.value = Mana;
             if (Mana < 0)
             {
@@ -437,7 +445,6 @@ public class Charactermanager : MonoBehaviour
         {
             ShopTeleporting = true;
             StartCoroutine(ApothecaryShopTiming());
-            ShopTeleporting = false;
         }
     }
     public void FistHit(GameObject HitObject)
@@ -462,6 +469,7 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", true);
         yield return new WaitForSeconds(1f);
         TransitionController.SetBool("CircleTransition", false);
+        ShopTeleporting = false;
     }
 
     public void QuestCompleted()
@@ -486,10 +494,17 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", false);
         EnemieSoliders[0].Health = 800;
         EnemieSoliders[1].Health = 800;
+        EnemieSoliders[0].DamageText.text = "800";
+        EnemieSoliders[1].DamageText.text = "800";
+        EnemieSoliders[0].EnemeyAnimator.SetBool("Dead", false);
+        EnemieSoliders[1].EnemeyAnimator.SetBool("Dead", false);
+        EnemieSoliders[0].Dead = false;
+        EnemieSoliders[1].Dead = false;
         Health = 100;
         HealthBar.value = Health;
         Shield = 100;
         ShieldBar.value = Shield;
+        QuestControllerScript.EnemyCount = 0;
         Dead = false;
     }
     IEnumerator ShopExit()
@@ -562,19 +577,19 @@ public class Charactermanager : MonoBehaviour
     {
         if (Attacking == false)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSecondsRealtime(1f);
 
             if (Attacking == false)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSecondsRealtime(1f);
 
                 if (Attacking == false)
                 {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSecondsRealtime(1);
 
                     if (Attacking == false)
                     {
-                        yield return new WaitForSeconds(1f);
+                        yield return new WaitForSecondsRealtime(1 );
                         if (Mana < 100 && Attacking == false)
                         {
                             Mana += 0.5f;

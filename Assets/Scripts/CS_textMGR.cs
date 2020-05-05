@@ -7,6 +7,7 @@ public class CS_textMGR : MonoBehaviour
 {
 
     [Header("Enabling Text")]
+    public bool NoNextText;
     public GameObject textDisable;
     public GameObject textEnable;
     public Animator fadeAnim;
@@ -25,6 +26,9 @@ public class CS_textMGR : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         textEnable.SetActive(true);
-        textDisable.SetActive(false);
+        if (NoNextText == false)
+        {
+            textDisable.SetActive(false);
+        }
     }
 }

@@ -35,9 +35,11 @@ public class panelMGR : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            ClickMethod();
-            fadeAnim[clicking].SetBool("Fade", true);
-
+            if (clicking < 14)
+           {
+                ClickMethod();
+                fadeAnim[clicking].SetBool("Fade", true);
+           }
         }
     }
     public void ClickMethod()
