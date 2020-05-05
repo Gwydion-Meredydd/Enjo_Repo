@@ -112,9 +112,9 @@ public class panelMGR : MonoBehaviour
         else if (clicking == 8)
         {
             boardSix.SetActive(false);
-            boardSeven.SetActive(false);
+            boardSeven.SetActive(true);
 
-            boardEight.SetActive(true);
+            boardEight.SetActive(false);
             clicking = clicking + 1;
 
             Debug.Log(clicking);
@@ -122,6 +122,7 @@ public class panelMGR : MonoBehaviour
 
         else if (clicking == 9)
         {
+            boardSeven.SetActive(false);
             boardEight.SetActive(false);
 
             boardNine.SetActive(true);

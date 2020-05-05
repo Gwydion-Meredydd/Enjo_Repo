@@ -3,7 +3,12 @@ guid: e250d2e45e5a0b746a9e867d691596c6
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kettle_Mat
+    second: {fileID: 2100000, guid: 4f08afc8b07d27d41abcd2ca71ddd442, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
