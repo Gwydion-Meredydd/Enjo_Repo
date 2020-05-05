@@ -32,13 +32,15 @@ public class EnemyDamage : MonoBehaviour
     }
     void Update()
     {
-        if (Enemey == true)
+        if (Enemey == true)//checks if the script is on enemy
         {
+            //ai movement towards player
             Agent.destination = Target.position;
             distance = Vector3.Distance(transform.position, Target.transform.position);
             Vector3 curMove = transform.position - previousPosition;
             CurrentSpeed = curMove.magnitude / Time.deltaTime;
             previousPosition = transform.position;
+            //enemy animations
             if (CurrentSpeed > 0.1)
             {
                 Debug.Log("agag");
@@ -49,7 +51,7 @@ public class EnemyDamage : MonoBehaviour
                 Agent.isStopped = true;
                 EnemeyAnimator.SetBool("Attack", true);
                 EnemeyAnimator.SetBool("Walk", false);
-                StartCoroutine(Attacking());
+                StartCoroutine(Attacking());//starts attack
             }
             else
             {
@@ -61,6 +63,7 @@ public class EnemyDamage : MonoBehaviour
             }
             if (Health <= 0)
             {
+                //if enemy dead
                 IsAttacking = true;
                 Agent.isStopped = true;
                 Agent.speed = 0;
@@ -69,6 +72,7 @@ public class EnemyDamage : MonoBehaviour
 
         }
     }
+    //method is called when player damages object for both enemy and skarecrow
     public void Damage(int HitAmmount)
     {
         if (Enemey == true)
@@ -114,6 +118,7 @@ public class EnemyDamage : MonoBehaviour
             }
         }
     }
+    //fire brun timing
     IEnumerator FireBurn()
     {
         if (ScareCrow == true)
@@ -135,6 +140,7 @@ public class EnemyDamage : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
+    //enemy hit timing
     IEnumerator Hit()
     {
         Hited = true;
@@ -142,6 +148,7 @@ public class EnemyDamage : MonoBehaviour
         EnemeyAnimator.SetBool("Hit", false);
         Hited = false;
     }
+    //enemy attack timing
     IEnumerator Attacking()
     {
         if (IsAttacking == false)

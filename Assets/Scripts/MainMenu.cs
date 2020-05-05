@@ -9,15 +9,24 @@ public class MainMenu : MonoBehaviour
     public Animator CameraAnimator;
     public AudioMixer Mixer;
     public GameObject ToggleGameObject;
+    public bool isCredits;
 
     public void Start()
     {
         Screen.SetResolution(1920, 1080, true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        if (isCredits == true) 
+        {//credits timing for seen return
+            StartCoroutine(CreditsTiming());
+        }
+
     }
     public void Play()
-    {
+    {//loads level
         SceneManager.LoadScene(2);
     }
+    //camera operators
     public void Instructions()
     {
         CameraAnimator.SetBool("Instructions", true);
@@ -52,6 +61,7 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    //audio settings
     public void MasterSliderValue(float sliderValue)
     {
         Mixer.SetFloat("Master", Mathf.Log10(sliderValue) * 20);
@@ -76,6 +86,7 @@ public class MainMenu : MonoBehaviour
     {
         Mixer.SetFloat("World", Mathf.Log10(sliderValue) * 20);
     }
+    //graphics settings had to be removed due to build problems
     public void DropDown(int value)
     {
         if (value == 0)
@@ -104,6 +115,7 @@ public class MainMenu : MonoBehaviour
         }
 
     }
+    //fullscreen mode had to be mandatory due to build issues 
     public void ScreenChange()
     {
         bool ToggleSwitch = ToggleGameObject.GetComponent<Toggle>().isOn;
@@ -115,5 +127,13 @@ public class MainMenu : MonoBehaviour
         {
             Screen.fullScreen = false;
         }
+    }
+
+    IEnumerator CreditsTiming()
+    {
+        yield return new WaitForSeconds(140f);
+        SceneManager.LoadScene(0);
+
+
     }
 }

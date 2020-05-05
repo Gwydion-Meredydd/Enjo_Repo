@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
  
  public class Potions : MonoBehaviour
 {
+    //public system for potions is used by merchant script and player script to accsess potions ammount save
     public GameObject Player;
 
     public void HealthPotion() 

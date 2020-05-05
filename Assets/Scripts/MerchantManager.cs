@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MerchantManager : MonoBehaviour
 {
+    //this script allows for potions to be baught at the store, it then updates the potions ui and the potions class located on the player, it also checks if the quest manager has enough coins
     public int Coin_Ammount;
     public bool HasBoughtPotion;
     public Text CoinAmmountText;
@@ -20,8 +21,8 @@ public class MerchantManager : MonoBehaviour
         {
             if (HasBoughtPotion == false) 
             {
-                QuestManager.SendMessage("QuestCompleted");
                 HasBoughtPotion = true;
+                QuestManager.SendMessage("QuestCompleted");
             }
             CharacterRefrence.PotionAmmountSave.HealthPotion = CharacterRefrence.PotionAmmountSave.HealthPotion + 1;
             Coin_Ammount = Coin_Ammount - 60;

@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ConversationContex
 {
+    //class for creating easy npc chat
     public string name;
 
 

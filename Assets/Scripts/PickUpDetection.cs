@@ -29,11 +29,13 @@ public class PickUpDetection : MonoBehaviour
 
     private void Start()
     {
-        Player = GameObject.FindWithTag("Player");
+        //gets player refrence
+        Player = GameObject.Find("Enjo (1)");
     }
 
     void OnTriggerStay(Collider other)
     {
+        //checks if player is in collider
         if (other.gameObject.name == "Enjo (1)")
         {
             if (SendStayMessage == true && Door == false)
@@ -79,6 +81,7 @@ public class PickUpDetection : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        //checks if player entered collider
         if (other.gameObject.name == "Enjo (1)")
         {
             if (QuestOnly == true)
@@ -141,6 +144,7 @@ public class PickUpDetection : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
+        //checks if the player exit collider
         if (other.gameObject.name == "Enjo (1)")
         {
             TeleportCheck = false;
@@ -174,29 +178,37 @@ public class PickUpDetection : MonoBehaviour
             InteractText.text = "";
         }
     }
+    //for quest villager speeking
     public void ThreeVillagersSpoken() 
     {
         WonderingVillagerQuest = false;
     }
+    //teleport timing for shop
     IEnumerator Teleport()
     {
-        Player.SendMessage("CantMove");
+        Player.SendMessageUpwards("CantMove");
+        Debug.LogError(Player.name);
         Debug.LogError("1");
-        Player.SendMessage("ApothecaryShop");
+        Player.SendMessageUpwards("ApothecaryShop");
+        Debug.LogError(Player.name);
         Debug.LogError("2");
         yield return new WaitForSecondsRealtime(0.5f);
         Debug.LogError("3");
         PlayerCharacterController.enabled = false;
+        Debug.LogError(PlayerCharacterController.enabled);
         Debug.LogError("4");
+        Debug.LogError(TeleportLocation.name);
         Player.transform.position = TeleportLocation.transform.position;
         Debug.LogError("5");
         PlayerCharacterController.enabled = true;
+        Debug.LogError(PlayerCharacterController.enabled);
         Debug.LogError("6");
         if (HasPassed == true)
         {
             HasPassed = false;
             QuestManager.SendMessage("QuestCompleted");
         }
-        Player.SendMessage("CanMove");
+        Player.SendMessageUpwards("CanMove");
+        Debug.LogError(Player.name);
     }
 }

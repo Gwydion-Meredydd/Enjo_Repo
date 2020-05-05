@@ -36,17 +36,21 @@ public class QuestsController : MonoBehaviour
     public GameObject Dustruction;
     public Animator End;
     public GameObject Ending;
+    public GameObject[] Auido;
     void Start()
     {
+        //assings villagers to array
         Villagers = GameObject.FindGameObjectsWithTag("WonderingVillager");
     }
     public void QuestCompleted()
     {
+        //adds one to quest number and calls the quest switch statement
         QuestNumber++;
         StartCoroutine(QuestTextTiming());
     }
     IEnumerator QuestTextTiming()
     {
+        //this switch statment controlls the quests, enabling difrent game objects that are stored in arrays
         switch (QuestNumber)
         {
             case 1:
@@ -168,6 +172,8 @@ public class QuestsController : MonoBehaviour
                 Objective.text = "Defete the shade klan soldiers";
                 VCams[0].SetActive(false);
                 VCams[6].SetActive(true);
+                Auido[0].SetActive(false);
+                Auido[1].SetActive(true);
                 CutSceneCharacters[0].SetActive(true);
                 CutSceneCharacters[1].SetActive(true);
                 yield return new WaitForSeconds(39.85f);
@@ -216,6 +222,7 @@ public class QuestsController : MonoBehaviour
 
     public void ScareCrow() 
     {
+        //scare crow killed controller
         ScareCrowValue = ScareCrowValue + 1;
         if (ScareCrowValue == 5) 
         {
@@ -224,6 +231,7 @@ public class QuestsController : MonoBehaviour
     }
     public void Grab()
     {
+        //coin controller
         GrabAmmount++;
         CoinAmmount = CoinAmmount + 25;
         CoinAmmountText.text = "$ "+ CoinAmmount.ToString();
@@ -234,6 +242,7 @@ public class QuestsController : MonoBehaviour
     }
     public void VillagerSpeakingAmmount() 
     {
+        //villager spoken controller
         VillagerSpokenAmmount++;
         if (VillagerSpokenAmmount >= 3) 
         {
@@ -247,6 +256,7 @@ public class QuestsController : MonoBehaviour
     }
     public void EnemyKilled() 
     {
+        //enemy killed controller
         EnemyCount = EnemyCount + 1;
         if (EnemyCount  == 2) 
         {
@@ -255,11 +265,13 @@ public class QuestsController : MonoBehaviour
     }
     public void CoinRecall(int NewCointAmmount) 
     {
+        //coin recall for shop
         CoinAmmount = NewCointAmmount;
         CoinAmmountText.text = "$ " + CoinAmmount.ToString();
     }
     public void GetCoinAmmount() 
     {
+        //get coin for shop
         MerchantController.SendMessage("CoinReciver", CoinAmmount);
     }
 }

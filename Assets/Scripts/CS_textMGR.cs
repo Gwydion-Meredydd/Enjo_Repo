@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CS_textMGR : MonoBehaviour
 {
+    //method for manage intro text pop up
 
     [Header("Enabling Text")]
     public bool NoNextText;

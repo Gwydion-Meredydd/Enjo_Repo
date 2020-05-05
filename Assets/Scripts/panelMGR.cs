@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class panelMGR : MonoBehaviour
 {
+    //panels controller for intro allows for intro panels to fade in on click
     public int clicking;
 
     [Header("Boards")]

@@ -10,6 +10,7 @@ public class HitColliders : MonoBehaviour
     public Charactermanager PlayerRefrence;
     public bool Fist;
     public bool Sword;
+    //trigger is called when enemy sword or fist enters collison and sends message to player to apply damage to the collided object
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")

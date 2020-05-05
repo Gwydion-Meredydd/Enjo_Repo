@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class VillagerNPC : MonoBehaviour
 {
+    //NPC script that allows for the npc to interact with the player and move around difrent points in the market
     public NavMeshAgent NavMesh;
     public Animator VillagerAnimater;
     public float distance;

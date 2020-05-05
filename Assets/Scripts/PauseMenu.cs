@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 
 public class PauseMenu : MonoBehaviour
 {
+    //simple pause menu allows for the user to pause the game, change audio settings, and quit to main menu
     public GameObject PauseMenu_;
     public AudioMixer MainMixer;
     public bool PauseMenuOn;

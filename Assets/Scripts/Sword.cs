@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    //sword pickup controller , lets the player pickup sword
     public GameObject Lava;
     public GameObject QuestController;
     public GameObject Player;

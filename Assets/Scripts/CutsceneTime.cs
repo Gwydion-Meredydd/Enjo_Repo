@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CutsceneTime : MonoBehaviour
 {
+    //cutscene controller allows the player to not move whilst playing
     public GameObject Player;
     public float WaitTime;
     // Start is called before the first frame update

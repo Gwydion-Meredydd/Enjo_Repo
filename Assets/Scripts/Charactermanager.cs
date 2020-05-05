@@ -66,6 +66,7 @@ public class Charactermanager : MonoBehaviour
         ShieldBar.value = Shield;
         if (DeveloperMode == true) 
         {
+            //developer mode allows for more potions allowing for easier testing
             PotionAmmountSave.HealthPotion = 3;
             Potion_AmmountText[(0)].text = ("Health Potion " + "3");
             PotionAmmountSave.ManaPotion = 3;
@@ -90,18 +91,20 @@ public class Charactermanager : MonoBehaviour
 
         if (MoveOveride == false)
         {
+            //physics and movement 
             InputDecider();
             MovementManger();
         }
         if (Health <= 0 & Dead == false) 
         {
             Dead = true;
+            //checks if the player is dead
             StartCoroutine(Death());
         }
     }
     void InputDecider()
     {
-
+        //checks for player input
         Speed = new Vector2(InputX, InputZ).sqrMagnitude;
         if (InputSprint == 1 && CanSprint == true)
         {
@@ -124,6 +127,7 @@ public class Charactermanager : MonoBehaviour
     }
     void RotationManager()
     {
+        //rotation manager
         var forward = Cam.transform.forward;
         var right = Cam.transform.right;
 
@@ -139,6 +143,7 @@ public class Charactermanager : MonoBehaviour
     }
     void MovementManger()
     {
+        //moves player
         gravity -= 2.5f * Time.unscaledDeltaTime ;
         CharacterAnimator.SetFloat("X_Input", Speed);
         Vector3 moveDirection = DisiredMoveDirection * (movementSpeed * Time.deltaTime);
@@ -235,14 +240,7 @@ public class Charactermanager : MonoBehaviour
         }
         if (Input.GetButton("Fire1"))
         {
-            if (Application.isEditor)
-            {
-                Mana -= 0.35f;
-            }
-            else 
-            {
-                Mana -= 0.05f;
-            }
+            Mana -= 0.35f;
             ManaBar.value = Mana;
             if (Mana < 0)
             {
@@ -266,6 +264,7 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(ManaBarRejen());
         }
     }
+    //resets jump
     public void JumpEvent()
     {
         CanJump = true;
@@ -277,13 +276,14 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetBool("PreJump", false);
         gravity = 0;
     }
+    //sword pickup method
     public void SwordPickedUp() 
     {
         Sword = true;
         SwordObject.SetActive(true);
         CharacterAnimator.SetBool("Sword", true);
     }
-   
+   //updates potion class system
     public void PotionTextUpdate() 
     {
         Potion_AmmountText[0].text = ("Health Potion " + PotionAmmountSave.HealthPotion.ToString());
@@ -293,6 +293,7 @@ public class Charactermanager : MonoBehaviour
         Potion_AmmountText[4].text = ("Speed Potion " + PotionAmmountSave.SpeeedPotion.ToString());
         Potion_AmmountText[5].text = ("Strength Potion " + PotionAmmountSave.StrengthPotion.ToString());
     }
+    //potion select system
     public void PotionSelected (int PotionValue)
     {
         Potion = true;
@@ -371,6 +372,7 @@ public class Charactermanager : MonoBehaviour
         }
         PotionTextUpdate();
     }
+    //player interact method with coin
     public void CanGrab()
     {
         PickupText.text = "Press 'E' to pickup item!";
@@ -386,6 +388,7 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(TextPickupTimer());
         }
     }
+    //player interact with map
     public void CanGrabMap()
     {
         PickupText.text = "Press 'E' to pickup item!";
@@ -401,6 +404,7 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(TextPickupTimer());
         }
     }
+    //quest reached method controller
     public void QuestReached()
     {
         QuestManger.SendMessage("QuestCompleted");
@@ -422,6 +426,7 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetFloat("X_Input", 0);
         CharacterAnimator.SetFloat("Y_Input", 0);
     }
+    //damage to others system
     public void DamageDelt()
     {
         if (Shield == 0)
@@ -447,6 +452,7 @@ public class Charactermanager : MonoBehaviour
             StartCoroutine(ApothecaryShopTiming());
         }
     }
+    //checks if fist collides
     public void FistHit(GameObject HitObject)
     {
         if (Attacking == true)
@@ -455,6 +461,7 @@ public class Charactermanager : MonoBehaviour
             HitObject.SendMessage("Damage", HitAmmount);
         }
     }
+    //checks if sword collides
     public void SwordHit(GameObject HitObject)
     {
         if (Attacking == true)
@@ -464,6 +471,7 @@ public class Charactermanager : MonoBehaviour
             Debug.Log(HitObject);
         }
     }
+    //shop timing
     IEnumerator ApothecaryShopTiming()
     {
         TransitionController.SetBool("CircleTransition", true);
@@ -471,7 +479,7 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", false);
         ShopTeleporting = false;
     }
-
+    //quest completed method controller
     public void QuestCompleted()
     {
         MoveOveride = true;
@@ -483,6 +491,7 @@ public class Charactermanager : MonoBehaviour
         StartCoroutine(CelebrationTiming());
 
     }
+    //combat death reset
     IEnumerator Death()
     {
         TransitionController.SetBool("CircleTransition", true);
@@ -507,6 +516,7 @@ public class Charactermanager : MonoBehaviour
         QuestControllerScript.EnemyCount = 0;
         Dead = false;
     }
+    //player leaving shop timing
     IEnumerator ShopExit()
     {
         Debug.Log("Exit");
@@ -515,18 +525,21 @@ public class Charactermanager : MonoBehaviour
         TransitionController.SetBool("CircleTransition", false);
         ShopTeleporting = false;
     }
+    //player celebration timing
     IEnumerator CelebrationTiming()
     {
         yield return new WaitForSeconds(1.5f);
         CharacterAnimator.SetBool("Celebrate", false);
         MoveOveride = false;
     }
+    //hit form enemy timing
     IEnumerator Hit()
     {
         CharacterAnimator.SetBool("Hit", true);
         yield return new WaitForSeconds(0.5f);
         CharacterAnimator.SetBool("Hit", false);
     }
+    //jump controller
     void JumpOff()
     {
         if (gravity < 0)
@@ -535,6 +548,7 @@ public class Charactermanager : MonoBehaviour
 
         }
     }
+    //resets interaction text
     IEnumerator TextPickupTimer()
     {
         yield return new WaitForSeconds(1.5f);
@@ -544,12 +558,14 @@ public class Charactermanager : MonoBehaviour
         PickupText.text = "";
         isPickingUp = false;
     }
+    //potion effect timing
     IEnumerator JumpBoost()
     {
         JumpSpeed = 1f;
         yield return new WaitForSeconds(300);
         JumpSpeed = 0.6F;
     }
+    //potion effect timing
     IEnumerator SpeedBoost()
     {
         movementSpeed = 14;
@@ -558,12 +574,14 @@ public class Charactermanager : MonoBehaviour
         movementSpeed = 8;
         SprintSpeed = 16;
     }
+    //potion effect timing
     IEnumerator StrengthBoost()
     {
         HitMultiplier = 2;
         yield return new WaitForSeconds(300);
         HitMultiplier = 1;
     }
+    //potion effect timing
     IEnumerator PotionTiming()
     {
         Bottle.SetActive(true);
@@ -573,6 +591,7 @@ public class Charactermanager : MonoBehaviour
         CharacterAnimator.SetBool("Potion", false);
         Potion = false;
     }
+    //rejen mana level to 100%
     IEnumerator ManaBarRejen()
     {
         if (Attacking == false)

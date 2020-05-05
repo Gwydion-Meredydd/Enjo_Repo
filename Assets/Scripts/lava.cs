@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class lava : MonoBehaviour
 {
+    //the lava script controlls the parkour section , it allows the player to reset its location when they fail the parkour , also controls the sowrd pickup
     public GameObject Player;
     public Transform ResetOne;
     public Transform ResetTwo;

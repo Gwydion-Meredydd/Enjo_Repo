@@ -6,6 +6,7 @@ using Cinemachine;
 
 public class ConversationManger : MonoBehaviour
 {
+    //this script allows for the letters to appear as they where being typed 
     public Text NameText;
     public Text DialougeText;
     public Animator animator;
@@ -25,6 +26,7 @@ public class ConversationManger : MonoBehaviour
     }
 
     // Update is called once per frame
+    //method called when dialouge started using trigger, using conversation class to function
     public void StartDialouge(ConversationContex Dialouge) 
     {
         Player.SendMessage("CantMove");
@@ -37,6 +39,7 @@ public class ConversationManger : MonoBehaviour
         }
         DisplayNextSentance();
     }
+    //dispalys the next sentance
     public void DisplayNextSentance()
     {
         if (sentences.Count == 0) 
@@ -50,6 +53,7 @@ public class ConversationManger : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
     }
+    //makes letters appear in sequance
     IEnumerator TypeSentence (string sentence) 
     {
         DialougeText.text = "";
@@ -59,6 +63,7 @@ public class ConversationManger : MonoBehaviour
             yield return null;
         }
     }
+    //removes dialouge npc
     void EndDialouge() 
     {
         animator.SetBool("OnScreen", false);

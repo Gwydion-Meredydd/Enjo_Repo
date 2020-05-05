@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ToonLight : MonoBehaviour
 {
+    //allows for cell shaded look of the game 
     private Light light = null;
 
     private void OnEnable()
